@@ -1,9 +1,8 @@
-const { Configuration, OpenAIApi } = require("openai");
+const OpenAI = require("openai");
 
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
 
 const logError = (message, error) => {
   if (process.env.NODE_ENV !== 'test') {
@@ -15,7 +14,7 @@ const getMealSuggestions = async (ingredients) => {
   try {
     const prompt = `Generate recipe suggestions using these ingredients: ${ingredients.join(', ')}. Return the response as a JSON array of recipes, where each recipe has: name, ingredients (array of strings), and instructions (array of steps).`;
 
-    const response = await openai.createChatCompletion({
+    const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
         {
@@ -29,7 +28,7 @@ const getMealSuggestions = async (ingredients) => {
       ]
     });
 
-    return JSON.parse(response.data.choices[0].message.content);
+    return JSON.parse(response.choices[0].message.content);
   } catch (error) {
     console.error('Error generating meal suggestions:', error);
     throw new Error('Failed to generate meal suggestions');
@@ -40,7 +39,7 @@ const getIngredientSubstitutions = async (ingredient) => {
   try {
     const prompt = `Suggest substitutions for ${ingredient} in cooking. Return the response as a JSON array of substitutions, where each substitution has: name, ratio, and notes.`;
 
-    const response = await openai.createChatCompletion({
+    const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
         {
@@ -54,7 +53,7 @@ const getIngredientSubstitutions = async (ingredient) => {
       ]
     });
 
-    return JSON.parse(response.data.choices[0].message.content);
+    return JSON.parse(response.choices[0].message.content);
   } catch (error) {
     console.error('Error getting ingredient substitutions:', error);
     throw new Error('Failed to get ingredient substitutions');
@@ -65,7 +64,7 @@ const getRecipeInstructions = async (recipe) => {
   try {
     const prompt = `Generate detailed cooking instructions for ${recipe.name} using these ingredients: ${recipe.ingredients.join(', ')}. Return the response as a JSON array of instruction steps.`;
 
-    const response = await openai.createChatCompletion({
+    const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
         {
@@ -79,7 +78,7 @@ const getRecipeInstructions = async (recipe) => {
       ]
     });
 
-    return JSON.parse(response.data.choices[0].message.content);
+    return JSON.parse(response.choices[0].message.content);
   } catch (error) {
     console.error('Error generating recipe instructions:', error);
     throw new Error('Failed to generate recipe instructions');
