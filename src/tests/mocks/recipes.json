@@ -1,0 +1,31 @@
+{
+  "recipes": [
+    {
+      "id": "1",
+      "name": "Vegetable Stir Fry",
+      "ingredients": [
+        { "item": "tofu", "quantity": 1 },
+        { "item": "vegetables", "quantity": 2 },
+        { "item": "soy sauce", "quantity": 1 }
+      ],
+      "instructions": ["Cut vegetables", "Cook tofu", "Stir fry everything"],
+      "dietaryRestrictions": ["vegetarian"],
+      "prepTime": 20,
+      "cookTime": 15,
+      "servings": 4
+    },
+    {
+      "id": "2",
+      "name": "Rice Bowl",
+      "ingredients": [
+        { "item": "rice", "quantity": 1 },
+        { "item": "vegetables", "quantity": 1 }
+      ],
+      "instructions": ["Cook rice", "Steam vegetables", "Combine"],
+      "dietaryRestrictions": ["vegetarian", "gluten-free"],
+      "prepTime": 10,
+      "cookTime": 20,
+      "servings": 2
+    }
+  ]
+} 
