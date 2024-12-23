@@ -115,7 +115,10 @@ describe('Meal Plan Operations', () => {
 
   describe('Basic CRUD Operations', () => {
     test('loadMealPlans should handle invalid JSON gracefully', () => {
-      fs.readFileSync.mockImplementationOnce(() => { throw new Error('Invalid JSON'); });
+      fs.readFileSync = jest.fn(() => {
+        throw new Error('Invalid JSON');
+      });
+
       const result = loadMealPlans();
       expect(result).toEqual({
         mealPlans: [],

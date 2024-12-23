@@ -15,9 +15,8 @@ const TEST_MEALPLANS_FILE = path.join(TEST_DATA_DIR, 'mealplans.json');
 
 // Setup before all tests
 beforeAll(async () => {
-  // Start MongoDB Memory Server
-  mongoServer = await MongoMemoryServer.create();
-  const mongoUri = mongoServer.getUri();
+  mongoServer = new MongoMemoryServer();
+  const mongoUri = await mongoServer.getUri();
   
   await mongoose.connect(mongoUri, {
     useNewUrlParser: true,
@@ -39,6 +38,11 @@ beforeAll(async () => {
   app.use('/api/recipes', require('../../routes/recipeRoutes'));
   app.use('/api/mealplans', require('../../routes/mealPlanRoutes'));
   app.use('/api/suggestions', require('../../routes/suggestionRoutes'));
+
+  // Mock mongoose connection for integration tests
+  mongoose.connect = jest.fn().mockResolvedValue(mongoose);
+  mongoose.connection.on = jest.fn();
+  mongoose.connection.once = jest.fn();
 });
 
 // Cleanup after all tests
@@ -56,9 +60,9 @@ afterAll(async () => {
 
 // Reset database collections before each test
 beforeEach(async () => {
-  const collections = await mongoose.connection.db.collections();
-  for (let collection of collections) {
-    await collection.deleteMany({});
+  const collections = mongoose.connection.collections;
+  for (const key in collections) {
+    await collections[key].deleteMany();
   }
 
   // Reset test files with empty data

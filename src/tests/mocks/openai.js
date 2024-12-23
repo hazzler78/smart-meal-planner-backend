@@ -1,36 +1,29 @@
-class MockConfiguration {
-  constructor(config) {
-    this.apiKey = config.apiKey;
-  }
-}
-
-class MockOpenAIApi {
-  constructor(config) {
-    this.config = config;
-    this.createChatCompletion = jest.fn().mockResolvedValue({
-      data: {
-        choices: [
+const mockOpenAIResponse = {
+  choices: [
+    {
+      message: {
+        content: JSON.stringify([
           {
-            message: {
-              content: JSON.stringify([
-                {
-                  name: 'Test Recipe',
-                  ingredients: ['ingredient1', 'ingredient2'],
-                  instructions: ['step1', 'step2']
-                }
-              ])
-            }
+            name: 'Vegetable Rice Bowl',
+            ingredients: ['rice', 'vegetables'],
+            instructions: ['Cook rice', 'Add vegetables']
           }
-        ]
+        ])
       }
-    });
+    }
+  ]
+};
+
+const mockOpenAI = {
+  chat: {
+    completions: {
+      create: jest.fn().mockResolvedValue(mockOpenAIResponse)
+    }
   }
-}
+};
 
-const mockOpenAI = new MockOpenAIApi(new MockConfiguration({ apiKey: 'test' }));
+jest.mock('openai', () => ({
+  OpenAI: jest.fn().mockImplementation(() => mockOpenAI)
+}));
 
-module.exports = {
-  Configuration: MockConfiguration,
-  OpenAIApi: jest.fn(() => mockOpenAI),
-  mockOpenAI
-}; 
+module.exports = { mockOpenAI, mockOpenAIResponse }; 

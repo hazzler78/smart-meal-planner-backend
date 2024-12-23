@@ -13,13 +13,6 @@ jest.mock('fs', () => ({
 // Mock OpenAI
 jest.mock('openai', () => require('./mocks/openai'));
 
-// Create mock functions
-const mockGenerateRecipeSuggestions = jest.fn().mockResolvedValue([{
-  name: 'Mock Recipe',
-  ingredients: ['ingredient1', 'ingredient2'],
-  instructions: ['step1', 'step2']
-}]);
-
 const mockGetInventory = jest.fn().mockResolvedValue({
   items: [
     { name: 'ingredient1', amount: 1, unit: 'piece' },
@@ -37,7 +30,11 @@ const mockGetInventory = jest.fn().mockResolvedValue({
 
 // Mock services
 jest.mock('../services/aiService', () => ({
-  generateRecipeSuggestions: mockGenerateRecipeSuggestions
+  generateRecipeSuggestions: jest.fn().mockResolvedValue([{
+    name: 'Mock Recipe',
+    ingredients: ['ingredient1', 'ingredient2'],
+    instructions: ['step1', 'step2']
+  }])
 }));
 
 jest.mock('../services/inventoryService', () => ({
@@ -46,29 +43,18 @@ jest.mock('../services/inventoryService', () => ({
 
 // Import services after mocking
 const { autoGenerateMealPlan } = require('../services/mealPlanService');
+const aiService = require('../services/aiService');
 
 describe('Meal Plan Generation', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockGetInventory.mockResolvedValue({
-      items: [
-        { name: 'ingredient1', amount: 1, unit: 'piece' },
-        { name: 'ingredient2', amount: 2, unit: 'pieces' }
-      ],
-      pagination: {
-        page: 1,
-        limit: 10,
-        totalItems: 2,
-        totalPages: 1,
-        hasNextPage: false,
-        hasPrevPage: false
-      }
-    });
-    mockGenerateRecipeSuggestions.mockResolvedValue([{
-      name: 'Mock Recipe',
-      ingredients: ['ingredient1', 'ingredient2'],
-      instructions: ['step1', 'step2']
-    }]);
+    // Mock console.error
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    // Restore console.error
+    console.error.mockRestore();
   });
 
   test('autoGenerateMealPlan should generate meal plan with AI suggestions', async () => {
@@ -79,7 +65,7 @@ describe('Meal Plan Generation', () => {
     });
 
     expect(mockGetInventory).toHaveBeenCalled();
-    expect(mockGenerateRecipeSuggestions).toHaveBeenCalledWith(['ingredient1', 'ingredient2']);
+    expect(aiService.generateRecipeSuggestions).toHaveBeenCalledWith(['ingredient1', 'ingredient2']);
 
     expect(result).toMatchObject({
       name: 'AI Generated Plan',
@@ -115,18 +101,19 @@ describe('Meal Plan Generation', () => {
       endDate: '2024-01-07'
     })).rejects.toThrow('No ingredients available');
 
-    expect(mockGenerateRecipeSuggestions).not.toHaveBeenCalled();
+    expect(aiService.generateRecipeSuggestions).not.toHaveBeenCalled();
   });
 
   test('autoGenerateMealPlan should handle AI service errors gracefully', async () => {
-    mockGenerateRecipeSuggestions.mockRejectedValueOnce(new Error('AI service error'));
-
+    aiService.generateRecipeSuggestions.mockRejectedValueOnce(new Error('AI service error'));
+    
     const result = await autoGenerateMealPlan({
       name: 'AI Generated Plan',
       startDate: '2024-01-01',
       endDate: '2024-01-07'
     });
 
+    // Expect a valid meal plan with empty recipes
     expect(result).toMatchObject({
       name: 'AI Generated Plan',
       startDate: '2024-01-01',
@@ -136,5 +123,11 @@ describe('Meal Plan Generation', () => {
       createdAt: expect.any(String),
       updatedAt: expect.any(String)
     });
+
+    // Verify error was handled
+    expect(console.error).toHaveBeenCalledWith(
+      'Error generating meal plan:',
+      expect.any(Error)
+    );
   });
 }); 

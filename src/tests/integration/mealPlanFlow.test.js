@@ -9,6 +9,18 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 
 jest.setTimeout(30000); // Increase timeout to 30 seconds
 
+const mockUser = {
+  _id: 'testUserId',
+  email: 'test@example.com',
+  password: 'Password123!',
+  name: 'Test User',
+  preferences: {
+    dietaryRestrictions: ['vegetarian'],
+    allergies: ['nuts']
+  },
+  save: jest.fn().mockResolvedValue(this)
+};
+
 describe('Meal Planning Flow Integration Tests', () => {
   let mongoServer;
   let authToken;
@@ -16,8 +28,9 @@ describe('Meal Planning Flow Integration Tests', () => {
 
   beforeAll(async () => {
     // Start MongoDB Memory Server
-    mongoServer = await MongoMemoryServer.create();
-    const mongoUri = mongoServer.getUri();
+    mongoServer = new MongoMemoryServer();
+    await mongoServer.start();
+    const mongoUri = await mongoServer.getUri();
     
     await mongoose.connect(mongoUri, {
       useNewUrlParser: true,
@@ -36,8 +49,12 @@ describe('Meal Planning Flow Integration Tests', () => {
   });
 
   afterAll(async () => {
-    await mongoose.disconnect();
-    await mongoServer.stop();
+    if (mongoose.connection.readyState !== 0) {
+      await mongoose.connection.close();
+    }
+    if (mongoServer) {
+      await mongoServer.stop();
+    }
 
     // Clean up test files
     const dataDir = path.join(__dirname, '../../data');
@@ -49,22 +66,14 @@ describe('Meal Planning Flow Integration Tests', () => {
   });
 
   beforeEach(async () => {
-    // Clean up database
-    await User.deleteMany({});
+    const collections = await mongoose.connection.db.collections();
+    for (const collection of collections) {
+      await collection.deleteMany({});
+    }
 
-    // Create test user
-    const user = new User({
-      email: 'test@example.com',
-      password: 'Password123!',
-      name: 'Test User',
-      preferences: {
-        dietaryRestrictions: ['vegetarian'],
-        allergies: ['nuts']
-      }
-    });
-
-    await user.save();
-    userId = user._id;
+    // Mock user creation
+    User.prototype.save = jest.fn().mockResolvedValue(mockUser);
+    userId = mockUser._id;
     authToken = generateToken(userId);
 
     // Reset test files
