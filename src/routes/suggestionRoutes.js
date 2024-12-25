@@ -1,38 +1,46 @@
-const express = require('express');
-const auth = require('../middleware/auth');
-const { generateSuggestions } = require('../services/suggestionService');
-const { getIngredientSubstitutions, getRecipeInstructions } = require('../services/aiService');
+import express from 'express';
+import { generateSuggestions } from '../services/suggestionService.js';
+import { authenticateToken } from '../utils/auth.js';
+
 const router = express.Router();
 
-router.get('/recipes', auth, async (req, res) => {
+// Get recipe suggestions based on ingredients
+router.get('/', authenticateToken, async (req, res) => {
   try {
-    const suggestions = await generateSuggestions(req.user.userId);
+    const ingredients = req.query.ingredients 
+      ? Array.isArray(req.query.ingredients) 
+        ? req.query.ingredients 
+        : [req.query.ingredients]
+      : [];
+
+    const suggestions = await generateSuggestions(ingredients);
     res.json(suggestions);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error in recipe suggestions route:', error);
+    res.status(500).json({ error: 'Failed to generate suggestions' });
   }
 });
 
-router.get('/substitutions/:ingredient', auth, async (req, res) => {
+// Get suggestions based on inventory
+router.get('/from-inventory', authenticateToken, async (req, res) => {
   try {
-    const substitutions = await getIngredientSubstitutions(
-      req.params.ingredient,
-      req.user.preferences
-    );
-    res.json({ substitutions });
+    const suggestions = await generateSuggestions(req.user.inventory || []);
+    res.json(suggestions);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error in inventory-based suggestions route:', error);
+    res.status(500).json({ error: 'Failed to generate suggestions from inventory' });
   }
 });
 
-router.get('/recipe/:id/instructions', auth, async (req, res) => {
+// Get suggestions based on preferences
+router.get('/from-preferences', authenticateToken, async (req, res) => {
   try {
-    const recipe = await getRecipeById(req.params.id);
-    const instructions = await getRecipeInstructions(recipe, req.user.preferences);
-    res.json({ instructions });
+    const suggestions = await generateSuggestions([], req.user.preferences);
+    res.json(suggestions);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Error in preference-based suggestions route:', error);
+    res.status(500).json({ error: 'Failed to generate suggestions from preferences' });
   }
 });
 
-module.exports = router; 
+export { router }; 

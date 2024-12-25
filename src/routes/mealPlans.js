@@ -1,48 +1,86 @@
-const express = require('express');
-const router = express.Router();
-const { body, validationResult } = require('express-validator');
+import express from 'express';
+import { autoGenerateMealPlan, loadMealPlans, addMealPlan, updateMealPlan, deleteMealPlan } from '../services/mealPlanService.js';
 
-// In-memory storage for meal plans (for testing)
-let mealPlans = [];
+const router = express.Router();
+
+// Get all meal plans
+router.get('/', async (req, res) => {
+  try {
+    const mealPlans = await loadMealPlans();
+    res.json(mealPlans);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Get specific meal plan
+router.get('/:id', async (req, res) => {
+  try {
+    const mealPlans = await loadMealPlans();
+    const mealPlan = mealPlans.mealPlans.find(mp => mp.id === req.params.id);
+    if (!mealPlan) {
+      return res.status(404).json({ error: 'Meal plan not found' });
+    }
+    res.json(mealPlan);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Create meal plan
-router.post('/',
-  [
-    body('name').notEmpty().trim(),
-    body('startDate').isISO8601(),
-    body('days').isInt({ min: 1, max: 31 }),
-    body('mealsPerDay').isInt({ min: 1, max: 6 })
-  ],
-  (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ error: errors.array() });
+router.post('/', async (req, res) => {
+  try {
+    const { name, startDate, days, mealsPerDay } = req.body;
+
+    // Validate input
+    if (!startDate || !days || !mealsPerDay) {
+      return res.status(400).json({ error: 'startDate, days, and mealsPerDay are required' });
     }
 
-    const mealPlan = {
-      id: `plan${mealPlans.length + 1}`,
-      ...req.body,
-      createdAt: new Date().toISOString(),
-      meals: []
-    };
+    if (days <= 0 || mealsPerDay <= 0) {
+      return res.status(400).json({ error: 'days and mealsPerDay must be positive numbers' });
+    }
 
-    mealPlans.push(mealPlan);
+    // Calculate end date
+    const endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + days);
+
+    const mealPlan = await autoGenerateMealPlan({
+      name: name || 'Generated Meal Plan',
+      startDate,
+      endDate: endDate.toISOString().split('T')[0]
+    });
+
+    res.status(200).json(mealPlan);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Update meal plan
+router.put('/:id', async (req, res) => {
+  try {
+    const mealPlan = await updateMealPlan(req.params.id, req.body);
+    if (!mealPlan) {
+      return res.status(404).json({ error: 'Meal plan not found' });
+    }
     res.json(mealPlan);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-);
-
-// Get meal plans
-router.get('/', (req, res) => {
-  res.json(mealPlans);
 });
 
-// Get meal plan by id
-router.get('/:id', (req, res) => {
-  const mealPlan = mealPlans.find(p => p.id === req.params.id);
-  if (!mealPlan) {
-    return res.status(404).json({ error: 'Meal plan not found' });
+// Delete meal plan
+router.delete('/:id', async (req, res) => {
+  try {
+    await deleteMealPlan(req.params.id);
+    res.json({ message: 'Meal plan deleted successfully' });
+  } catch (error) {
+    if (error.message === 'Meal plan not found') {
+      return res.status(404).json({ error: error.message });
+    }
+    res.status(500).json({ error: error.message });
   }
-  res.json(mealPlan);
 });
 
-module.exports = router; 
+export default router; 

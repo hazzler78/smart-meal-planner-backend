@@ -1,0 +1,1628 @@
+[
+  {
+    "name": "Test Meal Plan",
+    "startDate": "2024-01-01",
+    "endDate": "2024-01-08",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "chicken",
+      "rice"
+    ],
+    "userId": "676ae5b9cb738f4a246eb9be",
+    "meals": [
+      "Grilled chicken breast with cilantro lime rice",
+      "Chicken stir-fry with veggies over rice",
+      "Slow cooker chicken and rice casserole",
+      "Chicken and rice soup with vegetables",
+      "Chicken and rice burrito bowl"
+    ],
+    "id": "1735058876451",
+    "createdAt": "2024-12-24T16:47:56.452Z",
+    "updatedAt": "2024-12-24T16:47:56.453Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "startDate": "2024-01-01",
+    "endDate": "2024-01-08",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "chicken",
+      "rice"
+    ],
+    "userId": "676b01ac185b8c3c83605f7c",
+    "meals": [
+      {
+        "name": "Chicken Stir Fry with Rice",
+        "ingredients": [
+          "chicken",
+          "rice",
+          "mixed vegetables",
+          "soy sauce",
+          "garlic",
+          "ginger"
+        ]
+      },
+      {
+        "name": "Chicken and Rice Casserole",
+        "ingredients": [
+          "chicken",
+          "rice",
+          "cream of chicken soup",
+          "onion",
+          "celery",
+          "carrots"
+        ]
+      },
+      {
+        "name": "Chicken and Rice Soup",
+        "ingredients": [
+          "chicken",
+          "rice",
+          "chicken broth",
+          "onion",
+          "carrots",
+          "celery"
+        ]
+      }
+    ],
+    "id": "1735066032194",
+    "createdAt": "2024-12-24T18:47:12.194Z",
+    "updatedAt": "2024-12-24T18:47:12.194Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "startDate": "2024-01-01",
+    "endDate": "2024-01-08",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "chicken",
+      "rice"
+    ],
+    "userId": "676b01d13d98d9068becf40e",
+    "meals": [
+      "Chicken and rice stir fry",
+      "Chicken and rice soup",
+      "Chicken and rice casserole",
+      "Grilled chicken with rice pilaf",
+      "Chicken and rice burrito bowls",
+      "Chicken and rice salad with lemon vinaigrette",
+      "Baked chicken and rice with vegetables",
+      "Chicken and rice curry",
+      "Chicken and rice lettuce wraps"
+    ],
+    "id": "1735066068145",
+    "createdAt": "2024-12-24T18:47:48.145Z",
+    "updatedAt": "2024-12-24T18:47:48.146Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "startDate": "2024-01-01",
+    "endDate": "2024-01-08",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "chicken",
+      "rice"
+    ],
+    "userId": "676b022b7b0dcc305479aa16",
+    "meals": [
+      {
+        "name": "Grilled Chicken and Rice",
+        "ingredients": [
+          "chicken",
+          "rice",
+          "herbs",
+          "lemon"
+        ],
+        "instructions": "Marinate the chicken in herbs and lemon, then grill until cooked. Serve with rice."
+      },
+      {
+        "name": "Chicken Stir-Fry with Rice",
+        "ingredients": [
+          "chicken",
+          "rice",
+          "vegetables",
+          "soy sauce"
+        ],
+        "instructions": "Stir-fry chicken and vegetables in soy sauce, then serve over rice."
+      },
+      {
+        "name": "Chicken and Rice Soup",
+        "ingredients": [
+          "chicken",
+          "rice",
+          "carrots",
+          "celery",
+          "onion",
+          "chicken broth"
+        ],
+        "instructions": "Simmer chicken, vegetables, and rice in chicken broth until cooked through."
+      }
+    ],
+    "id": "1735066159259",
+    "createdAt": "2024-12-24T18:49:19.259Z",
+    "updatedAt": "2024-12-24T18:49:19.259Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "startDate": "2024-01-01",
+    "endDate": "2024-01-08",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "chicken",
+      "rice"
+    ],
+    "userId": "676b196499d60ebcc55607e1",
+    "meals": [
+      "Chicken and rice stir-fry",
+      "Chicken and rice soup",
+      "Grilled chicken with rice pilaf",
+      "Chicken and rice casserole",
+      "Chicken and rice burrito bowl",
+      "Chicken and rice curry",
+      "Teriyaki chicken with rice",
+      "Chicken and rice salad",
+      "Chicken and rice stuffed peppers",
+      "Chicken fried rice"
+    ],
+    "id": "1735072103539",
+    "createdAt": "2024-12-24T20:28:23.539Z",
+    "updatedAt": "2024-12-24T20:28:23.540Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "startDate": "2024-01-01",
+    "endDate": "2024-01-08",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "chicken",
+      "rice"
+    ],
+    "userId": "676b1d30321127eee9558c90",
+    "meals": [
+      "Chicken stir-fry with vegetables over rice",
+      "Grilled chicken and rice bowl with avocado and salsa",
+      "Chicken and vegetable curry over rice",
+      "Fried chicken with teriyaki sauce and rice",
+      "Chicken and broccoli casserole with rice",
+      "Chicken and black bean burrito bowl with rice"
+    ],
+    "id": "1735073075409",
+    "createdAt": "2024-12-24T20:44:35.409Z",
+    "updatedAt": "2024-12-24T20:44:35.410Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "startDate": "2024-01-01",
+    "endDate": "2024-01-08",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "chicken",
+      "rice"
+    ],
+    "userId": "676b1db821210ef618660f7b",
+    "meals": [
+      "Chicken stir-fry with rice",
+      "Grilled chicken with rice pilaf",
+      "Chicken and rice soup",
+      "Chicken curry with rice",
+      "Chicken and vegetable fried rice",
+      "Chicken and mushroom risotto",
+      "Lemon herb chicken with garlic rice",
+      "Teriyaki chicken over jasmine rice",
+      "Coconut curry chicken with basmati rice",
+      "Chicken and black bean burrito bowl with rice"
+    ],
+    "id": "1735073210934",
+    "createdAt": "2024-12-24T20:46:50.934Z",
+    "updatedAt": "2024-12-24T20:46:50.934Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "startDate": "2024-01-01",
+    "endDate": "2024-01-08",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "chicken",
+      "rice"
+    ],
+    "userId": "676b1e340e89e3192b83db69",
+    "meals": [
+      "Chicken stir-fry with rice",
+      "Grilled chicken and rice pilaf",
+      "Chicken curry with basmati rice",
+      "Chicken and vegetable fried rice",
+      "Chicken and rice soup",
+      "Lemon herb chicken over rice",
+      "Teriyaki chicken with jasmine rice",
+      "Mango salsa chicken with coconut rice"
+    ],
+    "id": "1735073338150",
+    "createdAt": "2024-12-24T20:48:58.150Z",
+    "updatedAt": "2024-12-24T20:48:58.151Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "startDate": "2024-01-01",
+    "endDate": "2024-01-08",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "chicken",
+      "rice"
+    ],
+    "userId": "676b1e92643a4aa3f1b6010c",
+    "meals": [
+      "Grilled chicken with seasoned rice",
+      "Chicken stir fry with rice",
+      "Chicken and rice soup",
+      "Chicken and rice casserole",
+      "Chicken and vegetable rice bowl",
+      "Chicken and rice burrito bowl"
+    ],
+    "id": "1735073429766",
+    "createdAt": "2024-12-24T20:50:29.766Z",
+    "updatedAt": "2024-12-24T20:50:29.767Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "startDate": "2024-01-01",
+    "endDate": "2024-01-08",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "chicken",
+      "rice"
+    ],
+    "userId": "676b208cbc7ad674c81501df",
+    "meals": [
+      "Grilled chicken with rice pilaf",
+      "Chicken stir-fry with jasmine rice",
+      "Chicken and vegetable fried rice",
+      "Chicken and rice soup",
+      "Baked chicken and wild rice casserole"
+    ],
+    "id": "1735073934923",
+    "createdAt": "2024-12-24T20:58:54.923Z",
+    "updatedAt": "2024-12-24T20:58:54.924Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "startDate": "2024-01-01",
+    "endDate": "2024-01-08",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "chicken",
+      "rice"
+    ],
+    "userId": "676b20f43437cc92c1a78c4d",
+    "meals": [
+      "Chicken stir-fry with rice",
+      "Grilled chicken with rice pilaf",
+      "Chicken and vegetable curry with rice",
+      "Chicken and broccoli casserole with rice",
+      "Chicken fried rice",
+      "Chicken and black bean burrito bowls with rice"
+    ],
+    "id": "1735074038762",
+    "createdAt": "2024-12-24T21:00:38.762Z",
+    "updatedAt": "2024-12-24T21:00:38.762Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "startDate": "2024-01-01",
+    "endDate": "2024-01-08",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "chicken",
+      "rice"
+    ],
+    "userId": "676b214302484bd03e86a009",
+    "meals": [
+      "Chicken and rice stir-fry",
+      "Fried chicken with rice",
+      "Chicken and rice soup",
+      "Grilled chicken over rice pilaf",
+      "Chicken and vegetable rice bowl",
+      "Coconut chicken curry with rice",
+      "Teriyaki chicken and rice",
+      "Lemon herb roasted chicken with rice",
+      "Chicken fried rice",
+      "Chicken and rice casserole"
+    ],
+    "id": "1735074119567",
+    "createdAt": "2024-12-24T21:01:59.567Z",
+    "updatedAt": "2024-12-24T21:01:59.568Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "startDate": "2024-01-01",
+    "endDate": "2024-01-08",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "chicken",
+      "rice"
+    ],
+    "userId": "676b216f9139b9bba298f0f3",
+    "meals": [
+      "Chicken stir-fry with rice",
+      "Grilled chicken and vegetable rice bowls",
+      "Chicken and rice soup",
+      "Chicken and rice burrito bowls",
+      "Honey garlic chicken with rice",
+      "Teriyaki chicken and rice",
+      "Chicken and mushroom risotto",
+      "Coconut chicken curry with rice"
+    ],
+    "id": "1735074163270",
+    "createdAt": "2024-12-24T21:02:43.270Z",
+    "updatedAt": "2024-12-24T21:02:43.270Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-24T21:19:49.053Z",
+    "endDate": "2024-12-31T21:19:49.053Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676b257414f88ab956ebe77c",
+    "meals": [
+      {
+        "name": "Vegetable Stir Fry",
+        "ingredients": [
+          "rice",
+          "vegetables (bell peppers, broccoli, carrots, snap peas)",
+          "soy sauce",
+          "garlic",
+          "ginger"
+        ],
+        "instructions": "Cook rice according to package instructions. In a large skillet, stir fry vegetables with garlic and ginger. Add soy sauce and continue cooking until vegetables are tender. Serve over rice."
+      },
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "vegetables (peas, carrots, corn, green beans)",
+          "eggs",
+          "soy sauce",
+          "sesame oil"
+        ],
+        "instructions": "Cook rice according to package instructions. In a large skillet, scramble eggs and set aside. Stir fry vegetables in sesame oil, then add rice and eggs. Drizzle with soy sauce and mix well."
+      },
+      {
+        "name": "Vegetable Curry with Rice",
+        "ingredients": [
+          "rice",
+          "vegetables (potatoes, cauliflower, peas, carrots)",
+          "coconut milk",
+          "curry powder",
+          "onion",
+          "garlic"
+        ],
+        "instructions": "Cook rice according to package instructions. In a large pot, sauté onion and garlic. Add vegetables and curry powder, then pour in coconut milk. Simmer until vegetables are cooked through. Serve over rice."
+      }
+    ],
+    "generatedAt": "2024-12-24T21:19:51.547Z",
+    "id": "1735075191547",
+    "createdAt": "2024-12-24T21:19:51.547Z",
+    "updatedAt": "2024-12-24T21:19:51.547Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-24T21:28:24.793Z",
+    "endDate": "2024-12-31T21:28:24.793Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676b277892e909f74ee3f930",
+    "meals": [
+      {
+        "name": "Vegetable Stir-Fry with Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "soy sauce",
+          "garlic",
+          "ginger"
+        ],
+        "instructions": "Cook rice according to package instructions. In a wok, stir-fry mixed vegetables with garlic and ginger until tender. Add soy sauce and continue to cook for another 2-3 minutes. Serve over rice."
+      },
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "eggs",
+          "onions",
+          "soy sauce"
+        ],
+        "instructions": "Cook rice according to package instructions. In a large skillet, scramble eggs and set aside. In the same skillet, sauté onions and mixed vegetables until tender. Add cooked rice and soy sauce, then stir in scrambled eggs. Cook for another 2-3 minutes and serve hot."
+      },
+      {
+        "name": "Vegetable Curry with Rice",
+        "ingredients": [
+          "rice",
+          "curry paste",
+          "coconut milk",
+          "mixed vegetables",
+          "onions"
+        ],
+        "instructions": "Cook rice according to package instructions. In a pot, sauté onions until translucent. Add curry paste and coconut milk, then stir in mixed vegetables. Simmer for 10-15 minutes until vegetables are cooked through. Serve over rice."
+      }
+    ],
+    "generatedAt": "2024-12-24T21:28:27.408Z",
+    "id": "1735075707409",
+    "createdAt": "2024-12-24T21:28:27.409Z",
+    "updatedAt": "2024-12-24T21:28:27.409Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-24T21:29:52.820Z",
+    "endDate": "2024-12-31T21:29:52.820Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676b27d022c4a9cfc3aacf19",
+    "meals": [
+      {
+        "name": "Vegetable stir-fry with rice",
+        "ingredients": [
+          "rice",
+          "vegetables (bell peppers, broccoli, carrots, snap peas)"
+        ],
+        "instructions": "Stir-fry mixed vegetables in a wok with soy sauce and garlic. Serve over cooked rice."
+      },
+      {
+        "name": "Vegetable fried rice",
+        "ingredients": [
+          "rice",
+          "vegetables (onions, peas, corn, carrots)"
+        ],
+        "instructions": "Cook rice and let it cool. Stir-fry mixed vegetables in a pan, then add cooked rice and soy sauce. Cook until heated through."
+      },
+      {
+        "name": "Vegetable curry with rice",
+        "ingredients": [
+          "rice",
+          "vegetables (potatoes, cauliflower, peas, carrots)"
+        ],
+        "instructions": "Make a curry sauce with coconut milk and curry paste. Add chopped vegetables and simmer until cooked. Serve over cooked rice."
+      }
+    ],
+    "generatedAt": "2024-12-24T21:29:55.178Z",
+    "id": "1735075795179",
+    "createdAt": "2024-12-24T21:29:55.179Z",
+    "updatedAt": "2024-12-24T21:29:55.179Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-24T21:39:16.700Z",
+    "endDate": "2024-12-31T21:39:16.700Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676b2a040825ef54ac1cd44d",
+    "meals": [
+      {
+        "name": "Vegetable Stir-Fry with Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "soy sauce",
+          "garlic",
+          "ginger"
+        ],
+        "instructions": "Cook rice according to package instructions. In a pan, sauté mixed vegetables with garlic and ginger until tender. Add soy sauce and mix well. Serve over cooked rice."
+      },
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "eggs",
+          "soy sauce",
+          "sesame oil"
+        ],
+        "instructions": "Cook rice according to package instructions. In a pan, scramble eggs and set aside. Sauté mixed vegetables in sesame oil until tender. Add cooked rice, scrambled eggs, and soy sauce. Mix well and serve hot."
+      },
+      {
+        "name": "Vegetable Curry with Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "coconut milk",
+          "curry paste",
+          "onion"
+        ],
+        "instructions": "Cook rice according to package instructions. In a pot, sauté diced onion until translucent. Add mixed vegetables, curry paste, and coconut milk. Simmer until vegetables are tender. Serve over cooked rice."
+      }
+    ],
+    "generatedAt": "2024-12-24T21:39:19.504Z",
+    "id": "1735076359504",
+    "createdAt": "2024-12-24T21:39:19.504Z",
+    "updatedAt": "2024-12-24T21:39:19.504Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-24T21:40:24.912Z",
+    "endDate": "2024-12-31T21:40:24.912Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676b2a483bd11c1f7bfa6dd5",
+    "meals": [
+      "Vegetable stir fry with rice: Stir fry mixed vegetables (such as bell peppers, broccoli, carrots, and snap peas) in a soy sauce and garlic sauce, serve over cooked rice.",
+      "Vegetable curry with rice: Cook a mix of onions, potatoes, peas, carrots, and cauliflower in a spicy curry sauce, serve with rice.",
+      "Vegetable fried rice: Cook rice with mixed vegetables (such as peas, carrots, corn, and green beans) in a soy sauce and sesame oil mix, add scrambled eggs for protein."
+    ],
+    "generatedAt": "2024-12-24T21:40:26.172Z",
+    "id": "1735076426173",
+    "createdAt": "2024-12-24T21:40:26.173Z",
+    "updatedAt": "2024-12-24T21:40:26.173Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-24T21:41:22.868Z",
+    "endDate": "2024-12-31T21:41:22.868Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676b2a822b215d83b7e2a859",
+    "meals": [
+      {
+        "name": "Vegetable stir-fry with rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "soy sauce",
+          "garlic",
+          "ginger"
+        ],
+        "instructions": "Cook rice according to instructions. In a separate pan, sauté mixed vegetables with minced garlic and ginger. Add soy sauce and stir-fry until vegetables are cooked. Serve over rice."
+      },
+      {
+        "name": "Vegetable fried rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "eggs",
+          "soy sauce",
+          "sesame oil"
+        ],
+        "instructions": "Cook rice according to instructions. In a pan, scramble eggs and add in mixed vegetables. Stir in cooked rice, soy sauce, and a drizzle of sesame oil. Cook until everything is heated through."
+      },
+      {
+        "name": "Vegetable curry with rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "coconut milk",
+          "curry paste",
+          "onion"
+        ],
+        "instructions": "Cook rice according to instructions. In a pot, sauté diced onion with curry paste. Add in mixed vegetables and coconut milk. Simmer until vegetables are cooked. Serve over rice."
+      }
+    ],
+    "generatedAt": "2024-12-24T21:41:25.307Z",
+    "id": "1735076485307",
+    "createdAt": "2024-12-24T21:41:25.307Z",
+    "updatedAt": "2024-12-24T21:41:25.307Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-24T21:44:52.191Z",
+    "endDate": "2024-12-31T21:44:52.191Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676b2b54de6f76c2e6d87f51",
+    "meals": [
+      "Stir-fried vegetables with rice: A simple and delicious meal option where you can stir-fry your favorite vegetables such as bell peppers, broccoli, and carrots with some soy sauce and garlic. Serve over a bed of steamed rice.",
+      "Vegetable fried rice: A classic dish where you can sauté a mix of vegetables like peas, corn, and green beans with cooked rice and season with soy sauce and sesame oil. Add some scrambled eggs or tofu for added protein.",
+      "Rice and vegetable curry: A hearty and flavorful meal made by simmering a mix of vegetables like potatoes, carrots, and peas in a curry sauce made with coconut milk and Indian spices. Serve over a bed of cooked rice."
+    ],
+    "generatedAt": "2024-12-24T21:44:53.917Z",
+    "id": "1735076693917",
+    "createdAt": "2024-12-24T21:44:53.917Z",
+    "updatedAt": "2024-12-24T21:44:53.917Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-24T21:46:21.320Z",
+    "endDate": "2024-12-31T21:46:21.320Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676b2bad7889438bec250406",
+    "meals": [
+      {
+        "name": "Vegetable Stir Fry",
+        "ingredients": [
+          "rice",
+          "vegetables (bell peppers, broccoli, carrots, snap peas)"
+        ],
+        "instructions": "Stir fry the vegetables in a pan with your favorite sauce and serve over a bed of rice."
+      },
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "vegetables (peas, carrots, onions, corn)"
+        ],
+        "instructions": "Cook the rice and sauté the vegetables in a pan, then mix together with the rice and add soy sauce for flavor."
+      },
+      {
+        "name": "Vegetable Curry with Rice",
+        "ingredients": [
+          "rice",
+          "vegetables (potatoes, cauliflower, peas, carrots)"
+        ],
+        "instructions": "Cook the vegetables in a curry sauce and serve over a bed of rice."
+      }
+    ],
+    "generatedAt": "2024-12-24T21:46:23.305Z",
+    "id": "1735076783305",
+    "createdAt": "2024-12-24T21:46:23.305Z",
+    "updatedAt": "2024-12-24T21:46:23.305Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-24T21:48:48.730Z",
+    "endDate": "2024-12-31T21:48:48.730Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676b2c4053705cb59b0da80c",
+    "meals": [
+      {
+        "name": "Vegetable Stir-Fry with Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "soy sauce",
+          "garlic",
+          "ginger",
+          "sesame oil"
+        ]
+      },
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "eggs",
+          "soy sauce",
+          "sesame oil",
+          "green onions"
+        ]
+      },
+      {
+        "name": "Vegetable Curry with Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "coconut milk",
+          "curry paste",
+          "onions",
+          "garlic"
+        ]
+      }
+    ],
+    "generatedAt": "2024-12-24T21:48:50.203Z",
+    "id": "1735076930256",
+    "createdAt": "2024-12-24T21:48:50.256Z",
+    "updatedAt": "2024-12-24T21:48:50.256Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-24T21:49:49.466Z",
+    "endDate": "2024-12-31T21:49:49.466Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676b2c7d280949aa490e33e4",
+    "meals": [
+      {
+        "name": "Stir-fried Vegetables with Rice",
+        "ingredients": [
+          "rice",
+          "bell peppers",
+          "broccoli",
+          "carrots",
+          "soy sauce",
+          "ginger",
+          "garlic"
+        ],
+        "instructions": "Cook rice according to package instructions. In a pan, stir-fry sliced bell peppers, broccoli, and carrots with minced ginger and garlic. Add soy sauce for flavor. Serve over cooked rice."
+      },
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables (peas, corn, carrots)",
+          "onion",
+          "garlic",
+          "soy sauce",
+          "eggs"
+        ],
+        "instructions": "Cook rice according to package instructions. In a pan, sauté chopped onion and garlic with mixed vegetables. Push the vegetables to the side and scramble eggs in the pan. Mix everything together, add soy sauce and cooked rice. Stir well and serve."
+      },
+      {
+        "name": "Vegetable Curry with Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables (potatoes, carrots, peas)",
+          "onion",
+          "garlic",
+          "coconut milk",
+          "curry powder"
+        ],
+        "instructions": "Cook rice according to package instructions. In a pot, sauté chopped onion and garlic, then add mixed vegetables and curry powder. Pour in coconut milk and simmer until vegetables are tender. Serve over cooked rice."
+      }
+    ],
+    "generatedAt": "2024-12-24T21:49:52.175Z",
+    "id": "1735076992176",
+    "createdAt": "2024-12-24T21:49:52.176Z",
+    "updatedAt": "2024-12-24T21:49:52.176Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-24T21:51:59.627Z",
+    "endDate": "2024-12-31T21:51:59.627Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676b2cff8e1dc72112784865",
+    "meals": [
+      {
+        "name": "Vegetable Stir Fry",
+        "ingredients": [
+          "rice",
+          "vegetables",
+          "soy sauce",
+          "ginger",
+          "garlic"
+        ],
+        "instructions": "Cook the rice according to package instructions. In a separate pan, stir fry a mix of your favorite vegetables with soy sauce, ginger, and garlic. Serve the stir fry over the cooked rice."
+      },
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "vegetables",
+          "eggs",
+          "soy sauce",
+          "sesame oil"
+        ],
+        "instructions": "Cook the rice according to package instructions. In a pan, scramble some eggs and set aside. In the same pan, stir fry the vegetables with soy sauce, then add the cooked rice and scrambled eggs. Drizzle with sesame oil before serving."
+      },
+      {
+        "name": "Vegetable Rice Bowl",
+        "ingredients": [
+          "rice",
+          "vegetables",
+          "avocado",
+          "black beans",
+          "lime"
+        ],
+        "instructions": "Cook the rice according to package instructions. In a bowl, layer the cooked rice with sautéed vegetables, sliced avocado, and black beans. Squeeze some lime juice over the top before serving."
+      }
+    ],
+    "generatedAt": "2024-12-24T21:52:01.960Z",
+    "id": "1735077121960",
+    "createdAt": "2024-12-24T21:52:01.960Z",
+    "updatedAt": "2024-12-24T21:52:01.960Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-24T21:53:15.032Z",
+    "endDate": "2024-12-31T21:53:15.032Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676b2d4a931ddc351f4bbaad",
+    "meals": [
+      {
+        "name": "Vegetable Stir-Fry",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "soy sauce",
+          "garlic",
+          "ginger"
+        ],
+        "instructions": "Cook rice according to package instructions. In a separate pan, sauté garlic and ginger in oil. Add mixed vegetables and stir-fry until tender. Add soy sauce and cooked rice, mix well and serve hot."
+      },
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "eggs",
+          "soy sauce",
+          "sesame oil"
+        ],
+        "instructions": "Cook rice according to package instructions. In a pan, scramble eggs and set aside. Sauté mixed vegetables in sesame oil until tender. Add cooked rice, scrambled eggs, and soy sauce. Mix well and serve hot."
+      },
+      {
+        "name": "Vegetable Rice Bowl",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "avocado",
+          "lime",
+          "cilantro"
+        ],
+        "instructions": "Cook rice according to package instructions. In a bowl, layer rice, mixed vegetables, sliced avocado, chopped cilantro, and a squeeze of lime juice. Mix well before eating."
+      }
+    ],
+    "generatedAt": "2024-12-24T21:53:17.353Z",
+    "id": "1735077197353",
+    "createdAt": "2024-12-24T21:53:17.353Z",
+    "updatedAt": "2024-12-24T21:53:17.353Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-24T21:54:59.236Z",
+    "endDate": "2024-12-31T21:54:59.236Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676b2db396f59f7e8332b6fc",
+    "meals": [
+      {
+        "name": "Vegetable Stir Fry with Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "soy sauce",
+          "garlic",
+          "ginger"
+        ],
+        "instructions": "Cook rice according to package instructions. In a large skillet, sauté mixed vegetables with garlic and ginger. Add soy sauce and continue cooking until vegetables are tender. Serve over rice."
+      },
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "eggs",
+          "soy sauce",
+          "sesame oil"
+        ],
+        "instructions": "Cook rice according to package instructions. In a large skillet, scramble eggs and add mixed vegetables. Stir in cooked rice, soy sauce, and a drizzle of sesame oil. Cook until heated through."
+      },
+      {
+        "name": "Vegetable Curry with Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "coconut milk",
+          "curry powder",
+          "onion",
+          "garlic"
+        ],
+        "instructions": "Cook rice according to package instructions. In a large pot, sauté onion and garlic. Add mixed vegetables, curry powder, and coconut milk. Simmer until vegetables are tender. Serve over rice."
+      }
+    ],
+    "generatedAt": "2024-12-24T21:55:01.589Z",
+    "id": "1735077301590",
+    "createdAt": "2024-12-24T21:55:01.590Z",
+    "updatedAt": "2024-12-24T21:55:01.590Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-25T06:15:10.311Z",
+    "endDate": "2025-01-01T06:15:10.311Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676ba2ee652f05eb8b001a95",
+    "meals": [
+      {
+        "name": "Vegetable Stir-Fry with Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables (bell peppers, broccoli, carrots, etc.)",
+          "soy sauce",
+          "garlic",
+          "ginger",
+          "sesame oil"
+        ],
+        "instructions": "Cook rice according to package instructions. In a hot skillet, stir-fry mixed vegetables with garlic and ginger in sesame oil. Add soy sauce and cooked rice, mix well and serve hot."
+      },
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables (peas, corn, carrots, etc.)",
+          "eggs",
+          "soy sauce",
+          "onions",
+          "garlic"
+        ],
+        "instructions": "Cook rice according to package instructions. In a pan, scramble eggs and set aside. In the same pan, sauté onions and garlic, then add mixed vegetables and cooked rice. Add soy sauce and scrambled eggs, stir well and serve hot."
+      },
+      {
+        "name": "Vegetable Rice Bowl",
+        "ingredients": [
+          "rice",
+          "assorted roasted vegetables (zucchini, mushrooms, onions, etc.)",
+          "avocado",
+          "cherry tomatoes",
+          "olive oil",
+          "balsamic vinegar"
+        ],
+        "instructions": "Cook rice according to package instructions. In a bowl, layer rice with roasted vegetables, sliced avocado, and cherry tomatoes. Drizzle with olive oil and balsamic vinegar, and serve as a healthy rice bowl."
+      }
+    ],
+    "generatedAt": "2024-12-25T06:15:13.944Z",
+    "id": "1735107313944",
+    "createdAt": "2024-12-25T06:15:13.944Z",
+    "updatedAt": "2024-12-25T06:15:13.944Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-25T06:17:12.999Z",
+    "endDate": "2025-01-01T06:17:12.999Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676ba3682f3387295e697ab2",
+    "meals": [
+      {
+        "name": "Vegetable Stir Fry with Rice",
+        "ingredients": [
+          "rice",
+          "bell peppers",
+          "broccoli",
+          "carrots",
+          "onions",
+          "soy sauce"
+        ],
+        "instructions": "Stir fry the vegetables in a wok with soy sauce, then serve over cooked rice."
+      },
+      {
+        "name": "Rice and Veggie Bowl",
+        "ingredients": [
+          "rice",
+          "spinach",
+          "tomatoes",
+          "corn",
+          "avocado",
+          "dressing of choice"
+        ],
+        "instructions": "Cook rice and top with a mix of fresh vegetables, avocado, and your favorite dressing."
+      },
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "peas",
+          "carrots",
+          "corn",
+          "green beans",
+          "soy sauce",
+          "eggs"
+        ],
+        "instructions": "Cook rice and stir fry with a mix of vegetables, add soy sauce and scrambled eggs for a tasty fried rice dish."
+      }
+    ],
+    "generatedAt": "2024-12-25T06:17:14.866Z",
+    "id": "1735107434866",
+    "createdAt": "2024-12-25T06:17:14.866Z",
+    "updatedAt": "2024-12-25T06:17:14.866Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-25T06:18:53.234Z",
+    "endDate": "2025-01-01T06:18:53.234Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676ba3cdabee57b79707fdd7",
+    "meals": [
+      {
+        "name": "Vegetable Stir Fry with Rice",
+        "ingredients": [
+          "rice",
+          "assorted vegetables (bell peppers, broccoli, carrots, snap peas)",
+          "soy sauce",
+          "ginger",
+          "garlic",
+          "sesame oil"
+        ],
+        "instructions": "Cook rice according to package instructions. In a hot pan, sauté chopped vegetables with garlic and ginger in sesame oil. Add soy sauce and stir until vegetables are cooked but still crisp. Serve over rice."
+      },
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "assorted vegetables (peas, carrots, corn, onions)",
+          "soy sauce",
+          "eggs",
+          "sesame oil",
+          "green onions"
+        ],
+        "instructions": "Cook rice and set aside. In a pan, scramble eggs and set aside. Sauté chopped vegetables in sesame oil, add cooked rice, scrambled eggs, soy sauce, and chopped green onions. Stir well and serve hot."
+      },
+      {
+        "name": "Vegetable Curry with Rice",
+        "ingredients": [
+          "rice",
+          "assorted vegetables (potatoes, cauliflower, carrots, peas)",
+          "coconut milk",
+          "curry paste",
+          "onion",
+          "garlic",
+          "ginger"
+        ],
+        "instructions": "Cook rice according to package instructions. In a pot, sauté chopped onion, garlic, and ginger. Add curry paste and cook until fragrant. Add chopped vegetables and coconut milk. Simmer until vegetables are cooked. Serve over rice."
+      }
+    ],
+    "generatedAt": "2024-12-25T06:18:56.255Z",
+    "id": "1735107536256",
+    "createdAt": "2024-12-25T06:18:56.256Z",
+    "updatedAt": "2024-12-25T06:18:56.256Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-25T06:20:36.084Z",
+    "endDate": "2025-01-01T06:20:36.084Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676ba433b4269c1d78033244",
+    "meals": [
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "soy sauce",
+          "sesame oil"
+        ],
+        "instructions": "Cook rice according to package instructions. In a pan, stir fry mixed vegetables in sesame oil. Add cooked rice and soy sauce, mix well and serve hot."
+      },
+      {
+        "name": "Stir Fried Vegetables with Rice",
+        "ingredients": [
+          "rice",
+          "bell peppers",
+          "broccoli",
+          "carrots",
+          "garlic",
+          "ginger",
+          "soy sauce"
+        ],
+        "instructions": "Cook rice according to package instructions. In a wok, stir fry bell peppers, broccoli, and carrots with garlic and ginger. Add soy sauce and mix well. Serve over cooked rice."
+      },
+      {
+        "name": "Vegetable Stir Fry with Quinoa",
+        "ingredients": [
+          "quinoa",
+          "mixed vegetables",
+          "tofu",
+          "soy sauce",
+          "hoisin sauce"
+        ],
+        "instructions": "Cook quinoa according to package instructions. In a pan, stir fry mixed vegetables and tofu with soy sauce and hoisin sauce. Serve over cooked quinoa."
+      }
+    ],
+    "generatedAt": "2024-12-25T06:20:39.299Z",
+    "id": "1735107639300",
+    "createdAt": "2024-12-25T06:20:39.300Z",
+    "updatedAt": "2024-12-25T06:20:39.300Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-25T06:22:25.193Z",
+    "endDate": "2025-01-01T06:22:25.193Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676ba4a1ebc0cc379d4f478f",
+    "meals": [
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "soy sauce",
+          "garlic",
+          "onion",
+          "eggs"
+        ],
+        "instructions": "Stir-fry garlic and onion in a pan, add mixed vegetables, rice, and soy sauce. Push the veggies and rice to the side, scramble eggs in the pan, then mix everything together. Serve hot."
+      },
+      {
+        "name": "Stir-fried Vegetables with Rice Noodles",
+        "ingredients": [
+          "rice noodles",
+          "assorted stir-fry vegetables",
+          "soy sauce",
+          "ginger",
+          "garlic",
+          "sesame oil"
+        ],
+        "instructions": "Cook rice noodles according to package instructions. Stir-fry veggies with ginger and garlic in sesame oil, add soy sauce. Toss in cooked rice noodles, mix well, and serve."
+      },
+      {
+        "name": "Vegetable Rice Bowl",
+        "ingredients": [
+          "rice",
+          "broccoli",
+          "carrots",
+          "bell peppers",
+          "tofu",
+          "soy sauce"
+        ],
+        "instructions": "Steam broccoli and carrots, sauté bell peppers and tofu in soy sauce. Serve on top of rice, garnish with sesame seeds or green onions."
+      }
+    ],
+    "generatedAt": "2024-12-25T06:22:28.078Z",
+    "id": "1735107748079",
+    "createdAt": "2024-12-25T06:22:28.079Z",
+    "updatedAt": "2024-12-25T06:22:28.079Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-25T06:25:45.578Z",
+    "endDate": "2025-01-01T06:25:45.578Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676ba56992662b571160ff03",
+    "meals": [
+      "Stir-fried vegetables and rice: Saute a mix of vegetables such as bell peppers, broccoli, carrots, and snap peas in a stir-fry sauce and serve over cooked rice.",
+      "Vegetable fried rice: Stir-fry a blend of mixed vegetables like peas, carrots, corn, and green beans with cooked rice and season with soy sauce and sesame oil.",
+      "Vegetable curry with rice: Make a flavorful vegetable curry with a mix of potatoes, cauliflower, peas, and carrots in a spiced coconut milk sauce and serve over steamed rice."
+    ],
+    "generatedAt": "2024-12-25T06:25:46.873Z",
+    "id": "1735107946874",
+    "createdAt": "2024-12-25T06:25:46.874Z",
+    "updatedAt": "2024-12-25T06:25:46.874Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-25T06:29:12.671Z",
+    "endDate": "2025-01-01T06:29:12.671Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676ba638f7dbbe9929907d34",
+    "meals": [
+      {
+        "name": "Vegetable stir-fry",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "soy sauce",
+          "garlic",
+          "ginger"
+        ],
+        "instructions": "Cook rice according to package instructions. In a pan, stir-fry mixed vegetables with garlic and ginger. Add soy sauce and cook until vegetables are tender. Serve over rice."
+      },
+      {
+        "name": "Vegetable fried rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "eggs",
+          "soy sauce",
+          "sesame oil"
+        ],
+        "instructions": "Cook rice according to package instructions. In a pan, scramble eggs and set aside. Stir-fry mixed vegetables in sesame oil, then add cooked rice and eggs. Season with soy sauce and mix well."
+      },
+      {
+        "name": "Vegetable curry with rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "coconut milk",
+          "curry paste",
+          "onion"
+        ],
+        "instructions": "Cook rice according to package instructions. In a pot, sauté onions with curry paste. Add mixed vegetables and coconut milk, then simmer until vegetables are cooked through. Serve over rice."
+      }
+    ],
+    "generatedAt": "2024-12-25T06:29:15.065Z",
+    "id": "1735108155065",
+    "createdAt": "2024-12-25T06:29:15.065Z",
+    "updatedAt": "2024-12-25T06:29:15.065Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-25T06:30:42.548Z",
+    "endDate": "2025-01-01T06:30:42.548Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676ba6923a595d4a4e7a3d18",
+    "meals": [
+      {
+        "name": "Vegetable Stir Fry with Rice",
+        "ingredients": [
+          "rice",
+          "bell peppers",
+          "broccoli",
+          "carrots",
+          "onions",
+          "soy sauce"
+        ],
+        "instructions": "Cook rice according to package instructions. In a large skillet, stir fry bell peppers, broccoli, carrots, and onions until tender. Add cooked rice and soy sauce, mix well and serve hot."
+      },
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "eggs",
+          "soy sauce",
+          "sesame oil"
+        ],
+        "instructions": "Cook rice according to package instructions. In a large skillet, cook mixed vegetables until tender. Push vegetables to the side, scramble eggs in the same skillet. Combine rice, vegetables, and eggs. Add soy sauce and sesame oil, mix well and serve hot."
+      },
+      {
+        "name": "Vegetable Rice Bowl with Teriyaki Sauce",
+        "ingredients": [
+          "rice",
+          "zucchini",
+          "mushrooms",
+          "red bell pepper",
+          "teriyaki sauce"
+        ],
+        "instructions": "Cook rice according to package instructions. In a separate pan, sauté zucchini, mushrooms, and red bell pepper until tender. Serve sautéed vegetables over rice and drizzle with teriyaki sauce."
+      }
+    ],
+    "generatedAt": "2024-12-25T06:30:45.227Z",
+    "id": "1735108245228",
+    "createdAt": "2024-12-25T06:30:45.228Z",
+    "updatedAt": "2024-12-25T06:30:45.228Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-25T06:32:41.099Z",
+    "endDate": "2025-01-01T06:32:41.099Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676ba7082dcaa3452bb244a7",
+    "meals": [
+      {
+        "name": "Vegetable Stir Fry with Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "soy sauce",
+          "garlic",
+          "ginger"
+        ]
+      },
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "eggs",
+          "soy sauce",
+          "sesame oil"
+        ]
+      },
+      {
+        "name": "Vegetable Curry with Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "coconut milk",
+          "curry paste",
+          "onion"
+        ]
+      }
+    ],
+    "generatedAt": "2024-12-25T06:32:42.829Z",
+    "id": "1735108362829",
+    "createdAt": "2024-12-25T06:32:42.829Z",
+    "updatedAt": "2024-12-25T06:32:42.829Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-25T06:33:23.974Z",
+    "endDate": "2025-01-01T06:33:23.974Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676ba733c623c1fa38801664",
+    "meals": [
+      {
+        "name": "Vegetable Stir Fry with Rice",
+        "ingredients": [
+          "rice",
+          "vegetables",
+          "soy sauce",
+          "ginger",
+          "garlic",
+          "sesame oil"
+        ],
+        "instructions": "Cook rice according to package instructions. In a hot skillet, stir fry mixed vegetables with soy sauce, ginger, garlic, and sesame oil. Serve over rice."
+      },
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "onion",
+          "egg",
+          "soy sauce",
+          "sesame oil"
+        ],
+        "instructions": "Cook rice according to package instructions. In a skillet, sauté chopped onion and mixed vegetables. Push vegetables to the side and scramble egg in the empty space. Mix everything together, add soy sauce and sesame oil. Serve hot."
+      },
+      {
+        "name": "Vegetable Rice Bowl",
+        "ingredients": [
+          "rice",
+          "mixed vegetables",
+          "black beans",
+          "avocado",
+          "salsa",
+          "cilantro"
+        ],
+        "instructions": "Cook rice according to package instructions. Assemble rice bowl with mixed vegetables, black beans, sliced avocado, salsa, and chopped cilantro. Enjoy as is or add your favorite protein like grilled chicken or tofu."
+      }
+    ],
+    "generatedAt": "2024-12-25T06:33:26.983Z",
+    "id": "1735108406984",
+    "createdAt": "2024-12-25T06:33:26.984Z",
+    "updatedAt": "2024-12-25T06:33:26.984Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-25T06:34:02.154Z",
+    "endDate": "2025-01-01T06:34:02.154Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676ba75a5f0e39eff76406e1",
+    "meals": [
+      {
+        "name": "Vegetable stir fry with rice",
+        "ingredients": [
+          "rice",
+          "assorted vegetables (bell peppers, broccoli, carrots, snap peas, etc.)",
+          "soy sauce",
+          "sesame oil",
+          "garlic",
+          "ginger"
+        ],
+        "instructions": "Cook rice according to package instructions. In a pan, sauté garlic and ginger in sesame oil. Add assorted vegetables and stir fry until cooked. Add soy sauce and mix well. Serve over rice."
+      },
+      {
+        "name": "Vegetable fried rice",
+        "ingredients": [
+          "rice",
+          "assorted vegetables (peas, carrots, corn, onions, etc.)",
+          "soy sauce",
+          "eggs",
+          "garlic",
+          "sesame oil"
+        ],
+        "instructions": "Cook rice according to package instructions. In a pan, scramble eggs and set aside. Sauté garlic in sesame oil, add assorted vegetables, and stir fry until cooked. Add rice, soy sauce, and scrambled eggs. Mix well and serve hot."
+      },
+      {
+        "name": "Vegetable rice bowl",
+        "ingredients": [
+          "rice",
+          "assorted vegetables (zucchini, mushrooms, bell peppers, onions, etc.)",
+          "avocado",
+          "lime",
+          "cilantro",
+          "black beans"
+        ],
+        "instructions": "Cook rice according to package instructions. Sauté assorted vegetables in a pan until cooked. Assemble the rice bowl with cooked rice, sautéed vegetables, sliced avocado, black beans, chopped cilantro, and a squeeze of lime juice."
+      }
+    ],
+    "generatedAt": "2024-12-25T06:34:04.927Z",
+    "id": "1735108444927",
+    "createdAt": "2024-12-25T06:34:04.927Z",
+    "updatedAt": "2024-12-25T06:34:04.927Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-25T09:53:35.590Z",
+    "endDate": "2025-01-01T09:53:35.590Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676bd61f35d0a58bc7e9592b",
+    "meals": [
+      {
+        "name": "Vegetable Stir Fry",
+        "ingredients": [
+          "rice",
+          "bell peppers",
+          "broccoli",
+          "carrots",
+          "onions",
+          "soy sauce"
+        ],
+        "instructions": "Cook rice according to package instructions. In a skillet, sauté sliced bell peppers, broccoli, carrots, and onions. Add cooked rice and soy sauce, and stir until well combined. Serve hot."
+      },
+      {
+        "name": "Rice Bowl with Roasted Vegetables",
+        "ingredients": [
+          "rice",
+          "zucchini",
+          "bell peppers",
+          "red onion",
+          "olive oil",
+          "garlic powder"
+        ],
+        "instructions": "Cook rice according to package instructions. Toss sliced zucchini, bell peppers, and red onion with olive oil and garlic powder. Roast in the oven until vegetables are tender. Serve over rice."
+      },
+      {
+        "name": "Vegetable Fried Rice",
+        "ingredients": [
+          "rice",
+          "peas",
+          "carrots",
+          "corn",
+          "eggs",
+          "soy sauce"
+        ],
+        "instructions": "Cook rice according to package instructions. In a skillet, scramble eggs and set aside. Sauté peas, carrots, and corn in the same skillet. Add cooked rice, scrambled eggs, and soy sauce, and stir until well combined. Serve hot."
+      }
+    ],
+    "generatedAt": "2024-12-25T09:53:38.901Z",
+    "id": "1735120418902",
+    "createdAt": "2024-12-25T09:53:38.902Z",
+    "updatedAt": "2024-12-25T09:53:38.902Z"
+  }
+]

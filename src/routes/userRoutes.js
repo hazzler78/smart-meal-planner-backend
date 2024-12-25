@@ -1,34 +1,59 @@
 const express = require('express');
-const { register, login, updatePreferences } = require('../services/userService');
-const auth = require('../middleware/auth');
 const router = express.Router();
+const userService = require('../services/userService');
 
-router.post('/register', async (req, res) => {
-  try {
-    const user = await register(req.body);
-    res.status(201).json(user);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
-
+// Login route
 router.post('/login', async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const result = await login(email, password);
-    res.json(result);
-  } catch (error) {
-    res.status(401).json({ error: error.message });
-  }
+    try {
+        const { email, password } = req.body;
+        const result = await userService.loginUser(email, password);
+        
+        if (result.success) {
+            res.status(200).json({
+                success: true,
+                token: result.token,
+                user: result.user
+            });
+        } else {
+            res.status(401).json({
+                success: false,
+                message: 'Invalid credentials'
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error during login',
+            error: error.message
+        });
+    }
 });
 
-router.put('/preferences', auth, async (req, res) => {
-  try {
-    const preferences = await updatePreferences(req.user.userId, req.body);
-    res.json(preferences);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
+// Register route
+router.post('/register', async (req, res) => {
+    try {
+        const { email, password, username } = req.body;
+        const result = await userService.registerUser({ email, password, username });
+
+        if (result.success) {
+            res.status(201).json({
+                success: true,
+                message: 'User registered successfully',
+                user: result.user
+            });
+        } else {
+            res.status(400).json({
+                success: false,
+                message: result.message || 'Registration failed'
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error during registration',
+            error: error.message
+        });
+    }
 });
 
 module.exports = router; 

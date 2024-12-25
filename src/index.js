@@ -1,23 +1,12 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-require("dotenv").config();
+import express from 'express';
+import dotenv from 'dotenv';
+import app from './app.js';
 
-const app = express();
+// Load environment variables
+dotenv.config();
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
+const port = process.env.PORT || 5000;
 
-// Routes
-app.use("/api/inventory", require("./routes/inventoryRoutes"));
-app.use("/api/recipes", require("./routes/recipeRoutes"));
-app.use("/api/mealplans", require("./routes/mealPlanRoutes"));
-app.use("/api/users", require("./routes/userRoutes"));
-app.use("/api/suggestions", require("./routes/suggestionRoutes"));
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });

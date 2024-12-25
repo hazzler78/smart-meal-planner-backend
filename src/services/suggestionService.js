@@ -1,6 +1,5 @@
-const inventoryService = require('./inventoryService');
-const recipeService = require('./recipeService');
-const aiService = require('./aiService');
+import * as recipeService from './recipeService.js';
+import * as aiService from './aiService.js';
 
 const generateSuggestions = async (ingredients) => {
   try {
@@ -12,67 +11,61 @@ const generateSuggestions = async (ingredients) => {
 
     // Get matching recipes first since they're from our database
     try {
+      console.log('Searching for recipes with ingredients:', ingredients);
       // Search for recipes that match any of the ingredients
-      const recipeResults = await Promise.all(ingredients.map(ing => 
-        recipeService.searchRecipes({ ingredient: ing })
-      ));
+      const dbRecipes = await recipeService.searchRecipes({ ingredient: ingredients[0] });
       
-      // Combine and deduplicate recipes
-      const uniqueRecipes = new Map();
-      recipeResults.flat().forEach(recipe => {
-        if (!uniqueRecipes.has(recipe.name)) {
-          uniqueRecipes.set(recipe.name, {
-            ...recipe,
-            source: 'database'
-          });
-        }
-      });
-      
-      // Get the first database recipe
-      const dbRecipes = Array.from(uniqueRecipes.values());
-      if (dbRecipes.length > 0) {
-        allSuggestions.push(dbRecipes[0]);
+      if (dbRecipes && dbRecipes.length > 0) {
+        allSuggestions.push({
+          ...dbRecipes[0],
+          source: 'database'
+        });
       }
-      console.log('Matching Recipes:', dbRecipes);
+      console.log('Found database recipes:', dbRecipes.length);
     } catch (error) {
       console.error('Recipe search error:', error);
     }
 
     // Then try to get one AI suggestion
-    let aiSucceeded = false;
     try {
+      console.log('Requesting AI suggestions for ingredients:', ingredients);
       const aiResult = await aiService.getMealSuggestions(ingredients);
-      if (Array.isArray(aiResult) && aiResult.length > 0) {
-        const formattedAiResult = {
-          name: aiResult[0].name,
-          ingredients: aiResult[0].ingredients.map(ing => ({
-            item: typeof ing === 'string' ? ing : ing.item || ing,
-            quantity: 1,
-            unit: null
-          })),
-          instructions: aiResult[0].instructions,
-          source: 'ai'
-        };
-        allSuggestions.push(formattedAiResult);
-        aiSucceeded = true;
+      
+      // Handle both array and recipes object formats
+      const aiRecipes = Array.isArray(aiResult) ? aiResult : (aiResult.recipes || []);
+      
+      if (aiRecipes.length > 0) {
+        const aiSuggestion = aiRecipes[0];
+        // Add AI suggestion if it has a name
+        if (aiSuggestion && typeof aiSuggestion === 'object' && aiSuggestion.name) {
+          const formattedAiSuggestion = {
+            name: aiSuggestion.name,
+            ingredients: Array.isArray(aiSuggestion.ingredients) 
+              ? aiSuggestion.ingredients.map(ing => ({
+                  item: typeof ing === 'string' ? ing : ing.item || ing,
+                  quantity: 1,
+                  unit: null
+                }))
+              : [],
+            instructions: aiSuggestion.instructions || [],
+            source: 'ai'
+          };
+          allSuggestions.push(formattedAiSuggestion);
+        }
       }
-      console.log('AI Suggestions:', aiResult);
     } catch (error) {
       console.error('AI service error:', error);
+      if (error.code === 'invalid_api_key') {
+        console.warn('OpenAI API key not configured or invalid');
+      }
     }
 
-    console.log('All Suggestions:', allSuggestions);
-
-    // If AI failed, only return database suggestions
-    const result = aiSucceeded ? allSuggestions : allSuggestions.filter(s => s.source === 'database');
-    console.log('Final Result:', result);
-    return result;
+    console.log('Total suggestions found:', allSuggestions.length);
+    return allSuggestions;
   } catch (error) {
     console.error('Error generating suggestions:', error);
     return [];
   }
 };
 
-module.exports = {
-  generateSuggestions
-}; 
+export { generateSuggestions }; 

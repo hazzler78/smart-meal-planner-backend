@@ -220,4 +220,4 @@ const getSuggestions = (command) => {
   return suggestions;
 };
 
-module.exports = { processCommand, getSuggestions }; 
+export { processCommand, getSuggestions }; 

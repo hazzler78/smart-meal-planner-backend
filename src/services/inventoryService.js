@@ -1,7 +1,7 @@
-const fs = require("fs");
-const path = require("path");
+import fs from 'fs';
+import path from 'path';
 
-const inventoryFilePath = path.join(__dirname, "../data/inventory.json");
+const inventoryFilePath = path.join(process.cwd(), "src/data/inventory.json");
 
 // Ensure data directory exists
 const ensureDataDirectory = () => {
@@ -190,7 +190,7 @@ const checkItemQuantity = (item) => {
   return inventory[item] || 0;
 };
 
-module.exports = {
+export {
   addItem,
   removeItem,
   checkItemQuantity,

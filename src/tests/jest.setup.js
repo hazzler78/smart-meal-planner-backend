@@ -1,5 +1,6 @@
 process.env.OPENAI_API_KEY = 'test-key';
 process.env.NODE_ENV = 'test';
+process.env.JWT_SECRET = 'test-jwt-secret';
 
 // Mock MongoDB
 jest.mock('mongodb', () => ({

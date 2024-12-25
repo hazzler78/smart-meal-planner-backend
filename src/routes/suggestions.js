@@ -1,16 +1,34 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
-// Get recipe suggestions
+// Get meal suggestions
 router.get('/', async (req, res) => {
   try {
-    // For testing purposes, return empty array
-    // In production, this would call the AI service
+    // TODO: Implement meal suggestions
     res.json([]);
   } catch (error) {
-    console.error('Error getting suggestions:', error);
-    res.status(500).json({ error: 'Failed to get suggestions' });
+    res.status(500).json({ error: error.message });
   }
 });
 
-module.exports = router; 
+// Get suggestions based on inventory
+router.get('/from-inventory', async (req, res) => {
+  try {
+    // TODO: Implement inventory-based suggestions
+    res.json([]);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Get suggestions based on preferences
+router.get('/from-preferences', async (req, res) => {
+  try {
+    // TODO: Implement preference-based suggestions
+    res.json([]);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+export default router; 

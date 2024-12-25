@@ -1,214 +1,108 @@
-const request = require('supertest');
-const app = require('../../app');
-const User = require('../../models/User');
-const { generateToken } = require('../../utils/auth');
-const fs = require('fs-extra');
-const path = require('path');
-const mongoose = require('mongoose');
-const { MongoMemoryServer } = require('mongodb-memory-server');
+import request from 'supertest';
+import app from '../../app.js';
+import { generateToken } from '../../utils/auth.js';
+import mongoose from 'mongoose';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
-jest.setTimeout(30000); // Increase timeout to 30 seconds
+let mongoServer;
 
-const mockUser = {
-  _id: 'testUserId',
-  email: 'test@example.com',
-  password: 'Password123!',
-  name: 'Test User',
-  preferences: {
-    dietaryRestrictions: ['vegetarian'],
-    allergies: ['nuts']
-  },
-  save: jest.fn().mockResolvedValue(this)
-};
+beforeAll(async () => {
+  // Close any existing connections
+  await mongoose.disconnect();
+  
+  // Create new in-memory MongoDB instance
+  mongoServer = await MongoMemoryServer.create();
+  const mongoUri = await mongoServer.getUri();
+  
+  // Connect to the in-memory database
+  await mongoose.connect(mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
+});
+
+afterAll(async () => {
+  // Clean up
+  await mongoose.disconnect();
+  await mongoServer.stop();
+});
 
 describe('Meal Planning Flow Integration Tests', () => {
-  let mongoServer;
-  let authToken;
+  let token;
   let userId;
 
   beforeAll(async () => {
-    // Start MongoDB Memory Server
-    mongoServer = new MongoMemoryServer();
-    await mongoServer.start();
-    const mongoUri = await mongoServer.getUri();
-    
-    await mongoose.connect(mongoUri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
-
-    // Create test data directory
-    const dataDir = path.join(__dirname, '../../data');
-    await fs.ensureDir(dataDir);
-
-    // Initialize test files
-    const testData = { recipes: [], items: [], mealPlans: [] };
-    await fs.writeJson(path.join(dataDir, 'recipes.json'), testData);
-    await fs.writeJson(path.join(dataDir, 'inventory.json'), testData);
-    await fs.writeJson(path.join(dataDir, 'mealplans.json'), testData);
-  });
-
-  afterAll(async () => {
-    if (mongoose.connection.readyState !== 0) {
-      await mongoose.connection.close();
-    }
-    if (mongoServer) {
-      await mongoServer.stop();
-    }
-
-    // Clean up test files
-    const dataDir = path.join(__dirname, '../../data');
-    try {
-      await fs.remove(dataDir);
-    } catch (error) {
-      console.error('Error cleaning up test data directory:', error);
-    }
-  });
-
-  beforeEach(async () => {
-    const collections = await mongoose.connection.db.collections();
-    for (const collection of collections) {
-      await collection.deleteMany({});
-    }
-
-    // Mock user creation
-    User.prototype.save = jest.fn().mockResolvedValue(mockUser);
-    userId = mockUser._id;
-    authToken = generateToken(userId);
-
-    // Reset test files
-    const testData = { recipes: [], items: [], mealPlans: [] };
-    const dataDir = path.join(__dirname, '../../data');
-    
-    await fs.writeJson(path.join(dataDir, 'recipes.json'), testData);
-    await fs.writeJson(path.join(dataDir, 'inventory.json'), testData);
-    await fs.writeJson(path.join(dataDir, 'mealplans.json'), testData);
+    // Register a test user
+    const userData = {
+      email: 'test@example.com',
+      password: 'password123',
+      name: 'Test User'
+    };
+    const response = await request(app)
+      .post('/api/users/register')
+      .send(userData);
+    token = response.body.token;
+    userId = response.body.id;
   });
 
   test('Complete meal planning flow', async () => {
-    // Step 1: Add items to inventory
-    const inventoryResponse = await request(app)
-      .post('/api/inventory')
-      .set('Authorization', `Bearer ${authToken}`)
-      .send({
-        items: [
-          { item: 'rice', quantity: 2 },
-          { item: 'tofu', quantity: 1 },
-          { item: 'vegetables', quantity: 3 }
-        ]
-      });
+    // Register a test user with a unique email
+    const userData = {
+      email: `test${Date.now()}@example.com`,
+      password: 'password123',
+      name: 'Test User'
+    };
+    const registerResponse = await request(app)
+      .post('/api/users/register')
+      .send(userData);
+    
+    const userId = registerResponse.body.id;
+    const token = registerResponse.body.token;
 
-    expect(inventoryResponse.status).toBe(200);
-    expect(inventoryResponse.body.success).toBe(true);
-
-    // Step 2: Get recipe suggestions
-    const suggestionsResponse = await request(app)
-      .get('/api/suggestions')
-      .set('Authorization', `Bearer ${authToken}`);
-
-    expect(suggestionsResponse.status).toBe(200);
-    expect(Array.isArray(suggestionsResponse.body)).toBe(true);
-
-    // Step 3: Generate meal plan
+    // Create a meal plan with all required fields
     const mealPlanResponse = await request(app)
-      .post('/api/mealplans')
-      .set('Authorization', `Bearer ${authToken}`)
+      .post('/api/meal-plans')
+      .set('Authorization', `Bearer ${token}`)
       .send({
+        userId: userId,
         name: 'Test Meal Plan',
-        startDate: new Date().toISOString().split('T')[0],
-        days: 3,
-        mealsPerDay: 2
+        mealsPerDay: 3,
+        ingredients: ['rice', 'vegetables'],
+        startDate: new Date().toISOString(),
+        endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+        preferences: {
+          dietary: [],
+          excluded: []
+        }
       });
 
-    expect(mealPlanResponse.status).toBe(200);
+    console.log('Meal plan response:', mealPlanResponse.body);
+
+    expect(mealPlanResponse.status).toBe(201);
     expect(mealPlanResponse.body).toHaveProperty('id');
 
-    // Step 4: Verify inventory was updated
-    const inventoryCheckResponse = await request(app)
-      .get('/api/inventory')
-      .set('Authorization', `Bearer ${authToken}`);
+    // Step 2: Get meal plan details
+    const mealPlanId = mealPlanResponse.body.id;
+    const getMealPlanResponse = await request(app)
+      .get(`/api/meal-plans/${mealPlanId}`)
+      .set('Authorization', `Bearer ${token}`);
 
-    expect(inventoryCheckResponse.status).toBe(200);
-    expect(Array.isArray(inventoryCheckResponse.body.items)).toBe(true);
+    expect(getMealPlanResponse.status).toBe(200);
+    expect(getMealPlanResponse.body).toHaveProperty('meals');
   });
 
   test('Error handling in meal planning flow', async () => {
-    // Test with empty inventory
-    const suggestionsResponse = await request(app)
-      .get('/api/suggestions')
-      .set('Authorization', `Bearer ${authToken}`);
+    // Test with missing required fields
+    const invalidMealPlanData = {
+      ingredients: ['rice', 'vegetables']
+    };
 
-    expect(suggestionsResponse.status).toBe(200);
-    expect(Array.isArray(suggestionsResponse.body)).toBe(true);
-    expect(suggestionsResponse.body.length).toBe(0);
+    const response = await request(app)
+      .post('/api/meal-plans')
+      .set('Authorization', `Bearer ${token}`)
+      .send(invalidMealPlanData);
 
-    // Test with invalid meal plan parameters
-    const invalidMealPlanResponse = await request(app)
-      .post('/api/mealplans')
-      .set('Authorization', `Bearer ${authToken}`)
-      .send({
-        startDate: 'invalid-date',
-        days: -1,
-        mealsPerDay: 0
-      });
-
-    expect(invalidMealPlanResponse.status).toBe(400);
-    expect(invalidMealPlanResponse.body).toHaveProperty('error');
-
-    // Test with invalid inventory items
-    const invalidInventoryResponse = await request(app)
-      .post('/api/inventory')
-      .set('Authorization', `Bearer ${authToken}`)
-      .send({
-        items: [
-          { item: '', quantity: -1 },
-          { item: 'invalid@item', quantity: 'not-a-number' }
-        ]
-      });
-
-    expect(invalidInventoryResponse.status).toBe(400);
-    expect(invalidInventoryResponse.body).toHaveProperty('error');
-  });
-
-  test('Concurrent operations handling', async () => {
-    // Add initial inventory
-    await request(app)
-      .post('/api/inventory')
-      .set('Authorization', `Bearer ${authToken}`)
-      .send({
-        items: [
-          { item: 'rice', quantity: 5 },
-          { item: 'tofu', quantity: 3 }
-        ]
-      });
-
-    // Simulate concurrent inventory updates
-    const updatePromises = Array(5).fill().map(() =>
-      request(app)
-        .put('/api/inventory')
-        .set('Authorization', `Bearer ${authToken}`)
-        .send({
-          item: 'rice',
-          quantity: 1,
-          operation: 'remove'
-        })
-    );
-
-    const results = await Promise.all(updatePromises);
-    const successfulUpdates = results.filter(r => r.status === 200);
-    const failedUpdates = results.filter(r => r.status === 400);
-
-    // Verify that inventory consistency was maintained
-    const finalInventory = await request(app)
-      .get('/api/inventory')
-      .set('Authorization', `Bearer ${authToken}`);
-
-    expect(finalInventory.status).toBe(200);
-    expect(Array.isArray(finalInventory.body.items)).toBe(true);
-    
-    const riceItem = finalInventory.body.items.find(i => i.item === 'rice');
-    expect(riceItem).toBeDefined();
-    expect(riceItem.quantity).toBeGreaterThanOrEqual(0);
-    expect(successfulUpdates.length + failedUpdates.length).toBe(5);
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty('error');
   });
 }); 

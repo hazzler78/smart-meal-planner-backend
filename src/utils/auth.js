@@ -1,29 +1,25 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = 'test-secret-key'; // Only for testing
+export function generateToken(userId) {
+  return jwt.sign({ id: userId }, process.env.JWT_SECRET || 'your-secret-key', { expiresIn: '24h' });
+}
 
-const generateToken = (userId) => {
-  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '24h' });
-};
+export function authenticateToken(req, res, next) {
+  const authHeader = req.header('Authorization');
+  if (!authHeader) {
+    return res.status(401).json({ error: 'Please authenticate' });
+  }
 
-const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-
+  const token = authHeader.replace('Bearer ', '');
   if (!token) {
-    return res.status(401).json({ error: 'Authentication required' });
+    return res.status(401).json({ error: 'Please authenticate' });
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+    req.user = { id: decoded.id, userId: decoded.id }; // Make both id and userId available
     next();
   } catch (error) {
-    return res.status(403).json({ error: 'Invalid token' });
+    res.status(401).json({ error: 'Please authenticate' });
   }
-};
-
-module.exports = {
-  generateToken,
-  authenticateToken
-}; 
+} 

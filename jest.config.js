@@ -1,21 +1,13 @@
-module.exports = {
+export default {
   testEnvironment: 'node',
-  coveragePathIgnorePatterns: ['/node_modules/'],
-  testMatch: ['**/tests/**/*.test.js'],
-  setupFilesAfterEnv: ['<rootDir>/src/tests/jest.setup.js'],
-  moduleDirectories: ['node_modules', 'src'],
-  transformIgnorePatterns: [
-    'node_modules/(?!(mongodb|mongodb-memory-server|mongoose)/)'
-  ],
   transform: {
-    '^.+\\.ts?$': ['ts-jest', {
-      isolatedModules: true,
-      diagnostics: {
-        ignoreCodes: [151001]
-      }
-    }]
+    '^.+\\.js$': 'babel-jest'
   },
-  moduleNameMapper: {
-    '^mongoose$': '<rootDir>/node_modules/mongoose'
-  }
+  setupFilesAfterEnv: ['./src/tests/setup.js'],
+  testMatch: ['**/*.test.js'],
+  verbose: true,
+  forceExit: true,
+  clearMocks: true,
+  resetMocks: true,
+  restoreMocks: true
 }; 

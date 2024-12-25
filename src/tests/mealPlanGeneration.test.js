@@ -1,133 +1,96 @@
-const fs = require('fs');
-const path = require('path');
+/**
+ * @jest-environment node
+ */
 
-// Mock fs operations
-jest.mock('fs', () => ({
-  existsSync: jest.fn().mockReturnValue(true),
-  readFileSync: jest.fn(),
-  writeFileSync: jest.fn(),
-  mkdirSync: jest.fn(),
-  unlinkSync: jest.fn()
+import { generateMealPlan } from '../services/mealPlanService.js';
+
+jest.mock('openai', () => ({
+  OpenAI: jest.fn().mockImplementation(() => ({
+    chat: {
+      completions: {
+        create: jest.fn().mockResolvedValue({
+          choices: [{
+            message: {
+              content: JSON.stringify({
+                meals: [
+                  {
+                    name: 'Stir-fried rice with vegetables',
+                    ingredients: ['rice', 'vegetables', 'soy sauce'],
+                    instructions: 'Cook rice and stir-fry with vegetables'
+                  }
+                ]
+              })
+            }
+          }]
+        })
+      }
+    }
+  }))
 }));
-
-// Mock OpenAI
-jest.mock('openai', () => require('./mocks/openai'));
-
-const mockGetInventory = jest.fn().mockResolvedValue({
-  items: [
-    { name: 'ingredient1', amount: 1, unit: 'piece' },
-    { name: 'ingredient2', amount: 2, unit: 'pieces' }
-  ],
-  pagination: {
-    page: 1,
-    limit: 10,
-    totalItems: 2,
-    totalPages: 1,
-    hasNextPage: false,
-    hasPrevPage: false
-  }
-});
-
-// Mock services
-jest.mock('../services/aiService', () => ({
-  generateRecipeSuggestions: jest.fn().mockResolvedValue([{
-    name: 'Mock Recipe',
-    ingredients: ['ingredient1', 'ingredient2'],
-    instructions: ['step1', 'step2']
-  }])
-}));
-
-jest.mock('../services/inventoryService', () => ({
-  getInventory: mockGetInventory
-}));
-
-// Import services after mocking
-const { autoGenerateMealPlan } = require('../services/mealPlanService');
-const aiService = require('../services/aiService');
 
 describe('Meal Plan Generation', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    // Mock console.error
-    jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
-  afterEach(() => {
-    // Restore console.error
-    console.error.mockRestore();
-  });
+  test('should generate meal plan successfully', async () => {
+    const preferences = {
+      name: 'Test Meal Plan',
+      ingredients: ['rice', 'vegetables'],
+      dietary: [],
+      excluded: [],
+      mealsPerDay: 3,
+      startDate: new Date(),
+      endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      userId: '123'
+    };
 
-  test('autoGenerateMealPlan should generate meal plan with AI suggestions', async () => {
-    const result = await autoGenerateMealPlan({
-      name: 'AI Generated Plan',
-      startDate: '2024-01-01',
-      endDate: '2024-01-07'
-    });
-
-    expect(mockGetInventory).toHaveBeenCalled();
-    expect(aiService.generateRecipeSuggestions).toHaveBeenCalledWith(['ingredient1', 'ingredient2']);
-
-    expect(result).toMatchObject({
-      name: 'AI Generated Plan',
-      startDate: '2024-01-01',
-      endDate: '2024-01-07',
-      recipes: [{
-        name: 'Mock Recipe',
-        ingredients: ['ingredient1', 'ingredient2'],
-        instructions: ['step1', 'step2']
-      }],
-      id: expect.any(String),
-      createdAt: expect.any(String),
-      updatedAt: expect.any(String)
-    });
-  });
-
-  test('autoGenerateMealPlan should handle no ingredients available', async () => {
-    mockGetInventory.mockResolvedValueOnce({
-      items: [],
-      pagination: {
-        page: 1,
-        limit: 10,
-        totalItems: 0,
-        totalPages: 0,
-        hasNextPage: false,
-        hasPrevPage: false
-      }
-    });
-
-    await expect(autoGenerateMealPlan({
-      name: 'AI Generated Plan',
-      startDate: '2024-01-01',
-      endDate: '2024-01-07'
-    })).rejects.toThrow('No ingredients available');
-
-    expect(aiService.generateRecipeSuggestions).not.toHaveBeenCalled();
-  });
-
-  test('autoGenerateMealPlan should handle AI service errors gracefully', async () => {
-    aiService.generateRecipeSuggestions.mockRejectedValueOnce(new Error('AI service error'));
+    const result = await generateMealPlan(preferences);
     
-    const result = await autoGenerateMealPlan({
-      name: 'AI Generated Plan',
-      startDate: '2024-01-01',
-      endDate: '2024-01-07'
-    });
+    expect(result).toBeDefined();
+    expect(result.meals).toBeInstanceOf(Array);
+    expect(result.meals.length).toBeGreaterThan(0);
+    expect(result.meals[0]).toHaveProperty('name');
+    expect(result.meals[0]).toHaveProperty('ingredients');
+    expect(result.meals[0]).toHaveProperty('instructions');
+  });
 
-    // Expect a valid meal plan with empty recipes
-    expect(result).toMatchObject({
-      name: 'AI Generated Plan',
-      startDate: '2024-01-01',
-      endDate: '2024-01-07',
-      recipes: [],
-      id: expect.any(String),
-      createdAt: expect.any(String),
-      updatedAt: expect.any(String)
-    });
+  test('should handle empty ingredients', async () => {
+    const preferences = {
+      name: 'Test Meal Plan',
+      ingredients: [],
+      dietary: [],
+      excluded: [],
+      mealsPerDay: 3,
+      startDate: new Date(),
+      endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      userId: '123'
+    };
 
-    // Verify error was handled
-    expect(console.error).toHaveBeenCalledWith(
-      'Error generating meal plan:',
-      expect.any(Error)
-    );
+    await expect(generateMealPlan(preferences)).rejects.toThrow('No ingredients provided');
+  });
+
+  test('should handle API errors', async () => {
+    const mockOpenAI = require('openai');
+    mockOpenAI.OpenAI.mockImplementationOnce(() => ({
+      chat: {
+        completions: {
+          create: jest.fn().mockRejectedValue(new Error('API Error'))
+        }
+      }
+    }));
+
+    const preferences = {
+      name: 'Test Meal Plan',
+      ingredients: ['rice', 'vegetables'],
+      dietary: [],
+      excluded: [],
+      mealsPerDay: 3,
+      startDate: new Date(),
+      endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      userId: '123'
+    };
+
+    await expect(generateMealPlan(preferences)).rejects.toThrow('Failed to generate meal plan');
   });
 }); 

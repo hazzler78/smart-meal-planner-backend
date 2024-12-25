@@ -1,124 +1,110 @@
-const fs = require('fs');
-const path = require('path');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { User } from '../models/User.js';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-const userFilePath = path.join(__dirname, "../data/users.json");
+export async function createUser(userData) {
+  try {
+    // Check if user already exists
+    const existingUser = await User.findOne({ email: userData.email.toLowerCase() });
+    if (existingUser) {
+      throw new Error('User already exists');
+    }
 
-// Ensure users file exists
-if (!fs.existsSync(userFilePath)) {
-  fs.writeFileSync(userFilePath, JSON.stringify([]));
+    // Create new user
+    const user = await User.create({
+      ...userData,
+      email: userData.email.toLowerCase()
+    });
+
+    return user.toJSON();
+  } catch (error) {
+    if (error.code === 11000 || error.message === 'User already exists') {
+      throw new Error('User already exists');
+    }
+    throw new Error(`Failed to create user: ${error.message}`);
+  }
 }
 
-const validateUser = (user) => {
-  if (!user.email || !user.password) {
-    throw new Error('Email and password are required');
-  }
-  
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email)) {
-    throw new Error('Invalid email format');
-  }
-  
-  if (user.password.length < 6) {
-    throw new Error('Password must be at least 6 characters long');
-  }
-};
-
-const loadUsers = () => {
+export async function getUserByEmail(email) {
   try {
-    return JSON.parse(fs.readFileSync(userFilePath, 'utf-8'));
+    const user = await User.findOne({ email: email.toLowerCase() });
+    return user ? user.toJSON() : null;
   } catch (error) {
-    console.error('Error loading users:', error);
-    return [];
+    throw new Error(`Failed to get user: ${error.message}`);
   }
-};
+}
 
-const saveUsers = (users) => {
-  fs.writeFileSync(userFilePath, JSON.stringify(users, null, 2));
-};
+export async function validateCredentials(email, password) {
+  try {
+    const user = await User.findOne({ email: email.toLowerCase() });
+    if (!user) {
+      return false;
+    }
 
-const register = async (userData) => {
-  validateUser(userData);
-  
-  const users = loadUsers();
-  
-  if (users.some(u => u.email === userData.email)) {
-    throw new Error('Email already registered');
+    const isValid = await user.comparePassword(password);
+    return isValid;
+  } catch (error) {
+    throw new Error(`Failed to validate credentials: ${error.message}`);
   }
+}
 
-  const hashedPassword = await bcrypt.hash(userData.password, 10);
-  
-  const newUser = {
-    id: Date.now().toString(),
-    email: userData.email,
-    password: hashedPassword,
-    preferences: userData.preferences || {},
-    createdAt: new Date().toISOString()
-  };
-
-  users.push(newUser);
-  saveUsers(users);
-
-  const { password, ...userWithoutPassword } = newUser;
-  return userWithoutPassword;
-};
-
-const login = async (email, password) => {
-  const users = loadUsers();
-  const user = users.find(u => u.email === email);
-
-  if (!user) {
-    throw new Error('Invalid email or password');
+export async function getUserById(userId) {
+  try {
+    const user = await User.findById(userId);
+    return user ? user.toJSON() : null;
+  } catch (error) {
+    throw new Error(`Failed to get user: ${error.message}`);
   }
+}
 
-  const isValid = await bcrypt.compare(password, user.password);
-  if (!isValid) {
-    throw new Error('Invalid email or password');
+export async function updateUser(userId, updates) {
+  try {
+    if (updates.email) {
+      updates.email = updates.email.toLowerCase();
+    }
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { ...updates, updatedAt: new Date() },
+      { new: true, runValidators: true }
+    );
+
+    return user ? user.toJSON() : null;
+  } catch (error) {
+    if (error.code === 11000) {
+      throw new Error('Email already exists');
+    }
+    throw new Error(`Failed to update user: ${error.message}`);
   }
+}
 
-  const token = jwt.sign(
-    { userId: user.id, email: user.email },
-    JWT_SECRET,
-    { expiresIn: '24h' }
-  );
-
-  const { password: _, ...userWithoutPassword } = user;
-  return { user: userWithoutPassword, token };
-};
-
-const getUserById = (id) => {
-  const users = loadUsers();
-  const user = users.find(u => u.id === id);
-  
-  if (!user) {
-    throw new Error('User not found');
+export async function deleteUser(userId) {
+  try {
+    await User.findByIdAndDelete(userId);
+  } catch (error) {
+    throw new Error(`Failed to delete user: ${error.message}`);
   }
+}
 
-  const { password, ...userWithoutPassword } = user;
-  return userWithoutPassword;
-};
+export async function loginUser(email, password) {
+  try {
+    const isValid = await validateCredentials(email, password);
+    if (!isValid) {
+      throw new Error('Invalid credentials');
+    }
 
-const updatePreferences = (userId, preferences) => {
-  const users = loadUsers();
-  const userIndex = users.findIndex(u => u.id === userId);
-  
-  if (userIndex === -1) {
-    throw new Error('User not found');
+    const user = await getUserByEmail(email);
+    return user;
+  } catch (error) {
+    throw new Error(`Failed to login: ${error.message}`);
   }
+}
 
-  users[userIndex].preferences = {
-    ...users[userIndex].preferences,
-    ...preferences
-  };
-
-  saveUsers(users);
-  return users[userIndex].preferences;
-};
-
-module.exports = {
-  register,
-  login,
-  getUserById,
-  updatePreferences
-}; 
+export async function registerUser(userData) {
+  try {
+    const user = await createUser(userData);
+    return user;
+  } catch (error) {
+    throw new Error(`Failed to register: ${error.message}`);
+  }
+} 

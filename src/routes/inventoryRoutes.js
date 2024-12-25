@@ -1,15 +1,15 @@
-const express = require("express");
-const NodeCache = require("node-cache");
-const { 
+import express from 'express';
+import NodeCache from 'node-cache';
+import { 
   addItem, 
   removeItem, 
   getInventoryWithFilters,
   validateItem,
   validateQuantity,
   checkItemQuantity
-} = require("../services/inventoryService");
-const { processCommand } = require("../services/commandProcessor");
-const { searchRecipes } = require("../services/recipeService");
+} from '../services/inventoryService.js';
+import { processCommand } from '../services/commandProcessor.js';
+import { searchRecipes } from '../services/recipeService.js';
 const router = express.Router();
 
 // Initialize cache with 5 minutes TTL
@@ -287,4 +287,110 @@ router.post("/command", (req, res) => {
   }
 });
 
-module.exports = router; 
+// Bulk add items to inventory
+router.post("/", (req, res) => {
+  try {
+    const { items } = req.body;
+    
+    if (!items || !Array.isArray(items)) {
+      return res.status(400).json({ 
+        error: "Items array is required" 
+      });
+    }
+
+    // Validate all items first
+    const validationErrors = items.map(item => {
+      if (!item.item || item.quantity === undefined) {
+        return 'Each item must have an item name and quantity';
+      }
+      try {
+        validateItem(item.item);
+        validateQuantity(item.quantity);
+        return null;
+      } catch (error) {
+        return error.message;
+      }
+    }).filter(error => error !== null);
+
+    if (validationErrors.length > 0) {
+      return res.status(400).json({ 
+        error: validationErrors[0] // Return the first validation error
+      });
+    }
+
+    // If validation passes, add all items
+    const results = items.map(item => {
+      try {
+        return {
+          item: item.item,
+          success: true,
+          result: addItem(item.item, item.quantity)
+        };
+      } catch (error) {
+        return {
+          item: item.item,
+          success: false,
+          error: error.message
+        };
+      }
+    });
+
+    const allSuccessful = results.every(r => r.success);
+    clearInventoryCache();
+    
+    if (!allSuccessful) {
+      const firstError = results.find(r => !r.success)?.error;
+      return res.status(400).json({ error: firstError });
+    }
+
+    res.json({
+      success: true,
+      results
+    });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Update inventory item
+router.put("/", (req, res) => {
+  try {
+    const { item, quantity, operation } = req.body;
+    
+    if (!item || quantity === undefined || !operation) {
+      return res.status(400).json({ 
+        error: "Item, quantity, and operation are required" 
+      });
+    }
+
+    let result;
+    if (operation === 'remove') {
+      result = removeItem(item, quantity);
+    } else if (operation === 'add') {
+      result = addItem(item, quantity);
+    } else {
+      return res.status(400).json({ 
+        error: "Operation must be either 'add' or 'remove'" 
+      });
+    }
+
+    clearInventoryCache();
+    res.json({
+      success: true,
+      item,
+      quantity,
+      operation,
+      result
+    });
+  } catch (error) {
+    if (error.message.includes("not found")) {
+      return res.status(404).json({ error: error.message });
+    }
+    if (error.message.includes("Insufficient quantity")) {
+      return res.status(400).json({ error: error.message });
+    }
+    res.status(400).json({ error: error.message });
+  }
+});
+
+export default router; 

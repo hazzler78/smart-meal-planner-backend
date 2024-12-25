@@ -1,7 +1,7 @@
-const fs = require("fs");
-const path = require("path");
+import fs from 'fs';
+import path from 'path';
 
-const recipeFilePath = path.join(__dirname, "../data/recipes.json");
+const recipeFilePath = path.join(process.cwd(), "src/data/recipes.json");
 
 // Validation functions
 const validateRecipeName = (name) => {
@@ -177,7 +177,7 @@ const searchRecipes = (query = {}) => {
   return recipes;
 };
 
-module.exports = {
+export {
   loadRecipes,
   searchRecipes,
   validateRecipeName,

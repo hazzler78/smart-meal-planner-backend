@@ -1,14 +1,23 @@
-const express = require('express');
-const cors = require('cors');
-const morgan = require('morgan');
-const { authenticateToken } = require('./utils/auth');
+import express from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
+import dotenv from 'dotenv';
+import connectDB from './config/database.js';
 
 // Import routes
-const inventoryRoutes = require('./routes/inventory');
-const suggestionsRoutes = require('./routes/suggestions');
-const mealPlanRoutes = require('./routes/mealPlans');
+import userRoutes from './routes/users.js';
+import mealPlanRoutes from './routes/mealPlanRoutes.js';
+import inventoryRoutes from './routes/inventoryRoutes.js';
+import chatRoutes from './routes/chat.js';
 
+// Load environment variables
+dotenv.config();
+
+// Initialize express app
 const app = express();
+
+// Connect to MongoDB
+connectDB();
 
 // Middleware
 app.use(cors());
@@ -16,16 +25,15 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // Routes
-app.use('/api/inventory', authenticateToken, inventoryRoutes);
-app.use('/api/suggestions', authenticateToken, suggestionsRoutes);
-app.use('/api/mealplans', authenticateToken, mealPlanRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/meal-plans', mealPlanRoutes);
+app.use('/api/inventory', inventoryRoutes);
+app.use('/api/chat', chatRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(err.status || 500).json({
-    error: err.message || 'Internal Server Error'
-  });
+  res.status(500).json({ message: 'Something went wrong!' });
 });
 
-module.exports = app; 
+export default app; 
