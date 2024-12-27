@@ -21,20 +21,55 @@ A Node.js backend service for the Smart Meal Planner application that helps user
 
 ```json
 {
+  "name": "smart-meal-planner-backend",
+  "version": "1.0.0",
+  "description": "Backend service for Smart Meal Planner application",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "express": "^4.18.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.21.2",
     "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^6.12.0",
+    "mongoose": "^7.6.3",
     "morgan": "^1.10.0",
-    "openai": "^4.0.0",
+    "multer": "^1.4.5-lts.1",
+    "node-cache": "^5.1.2",
+    "node-fetch": "^3.3.2",
+    "openai": "^4.77.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/plugin-syntax-import-meta": "^7.10.4",
+    "@babel/plugin-transform-modules-commonjs": "^7.26.3",
+    "@babel/preset-env": "^7.26.0",
+    "@types/jest": "^29.5.14",
+    "babel-jest": "^29.7.0",
+    "eslint": "^8.45.0",
     "jest": "^29.0.0",
+    "mongodb-memory-server": "^8.16.1",
+    "nodemon": "^3.0.1",
     "supertest": "^6.3.3",
-    "mongodb-memory-server": "^8.15.1"
+    "ts-jest": "^29.2.5"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }
 ```
@@ -48,6 +83,7 @@ PORT=3000
 MONGODB_URI=mongodb://localhost:27017/smart-meal-planner
 JWT_SECRET=your-jwt-secret-key
 OPENAI_API_KEY=your-openai-api-key
+XAI_API_KEY=your-xai-api-key
 ```
 
 ## Installation
