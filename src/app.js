@@ -9,6 +9,7 @@ import userRoutes from './routes/users.js';
 import mealPlanRoutes from './routes/mealPlanRoutes.js';
 import inventoryRoutes from './routes/inventoryRoutes.js';
 import chatRoutes from './routes/chat.js';
+import imageAnalysisRoutes from './routes/imageAnalysisRoutes.js';
 
 // Load environment variables
 dotenv.config();
@@ -29,6 +30,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/meal-plans', mealPlanRoutes);
 app.use('/api/inventory', inventoryRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/image-analysis', imageAnalysisRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

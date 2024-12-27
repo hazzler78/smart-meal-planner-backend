@@ -1,203 +1,217 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 
-const inventoryFilePath = path.join(process.cwd(), "src/data/inventory.json");
+// Use test file in test environment
+const INVENTORY_FILE = process.env.NODE_ENV === 'test' 
+  ? path.join(process.cwd(), 'data', 'test-inventory.json')
+  : path.join(process.cwd(), 'data', 'inventory.json');
 
-// Ensure data directory exists
-const ensureDataDirectory = () => {
-  const dataDir = path.dirname(inventoryFilePath);
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true });
-  }
-};
-
-const loadInventory = () => {
-  try {
-    ensureDataDirectory();
-
-    // Return test data in test mode
-    if (process.env.NODE_ENV === 'test') {
-      return {
-        'rice': 2,
-        'vegetables': 3,
-        'chicken': 1
-      };
-    }
-
-    if (!fs.existsSync(inventoryFilePath)) {
-      saveInventory({});
-      return {};
-    }
-
-    try {
-      const data = fs.readFileSync(inventoryFilePath, "utf-8");
-      return JSON.parse(data);
-    } catch (parseError) {
-      console.error("Error parsing inventory file:", parseError);
-      // If the file is corrupted, backup the old file and create a new one
-      const backupPath = `${inventoryFilePath}.backup.${Date.now()}`;
-      fs.renameSync(inventoryFilePath, backupPath);
-      saveInventory({});
-      return {};
-    }
-  } catch (error) {
-    console.error("Error loading inventory:", error);
-    return {};
-  }
-};
-
-const saveInventory = (inventory) => {
-  try {
-    // Don't save in test mode
-    if (process.env.NODE_ENV === 'test') return;
-
-    ensureDataDirectory();
-    fs.writeFileSync(inventoryFilePath, JSON.stringify(inventory, null, 2));
-  } catch (error) {
-    console.error("Error saving inventory:", error);
-    throw new Error("Failed to save inventory");
-  }
-};
-
-const validateItem = (item) => {
-  if (!item || typeof item !== 'string' || item.trim().length === 0) {
+/**
+ * Validate and normalize an item name
+ * @param {string} name - The item name to validate
+ * @returns {string} The normalized item name
+ * @throws {Error} If the item name is invalid
+ */
+export function validateItem(name) {
+  if (!name || typeof name !== 'string') {
     throw new Error('Item name must be a non-empty string');
   }
-  if (item.length > 100) {
-    throw new Error('Item name must be less than 100 characters');
+  
+  // Trim whitespace
+  const trimmed = name.trim();
+  if (!trimmed) {
+    throw new Error('Item name cannot be empty or just whitespace');
   }
-  if (!/^[a-zA-Z0-9\s-]+$/.test(item)) {
+  
+  // Check length
+  if (trimmed.length > 100) {
+    throw new Error('Item name cannot exceed 100 characters');
+  }
+  
+  // Check for invalid characters
+  if (!/^[a-zA-Z0-9\s-]+$/.test(trimmed)) {
     throw new Error('Item name can only contain letters, numbers, spaces, and hyphens');
   }
-  return item.trim().toLowerCase();
-};
+  
+  // Convert to lowercase for consistency
+  return trimmed.toLowerCase();
+}
 
-const validateQuantity = (quantity) => {
+/**
+ * Validate and normalize a quantity value
+ * @param {number|string} quantity - The quantity to validate
+ * @returns {number} The normalized quantity
+ * @throws {Error} If the quantity is invalid
+ */
+export function validateQuantity(quantity) {
+  if (quantity === null || quantity === undefined) {
+    throw new Error('Quantity is required');
+  }
+  
   const num = Number(quantity);
+  if (isNaN(num)) {
+    throw new Error('Quantity must be a valid number');
+  }
+  
   if (!Number.isInteger(num)) {
-    throw new Error('Quantity must be an integer');
+    throw new Error('Quantity must be a whole number');
   }
+  
   if (num <= 0) {
-    throw new Error('Quantity must be greater than 0');
+    throw new Error('Quantity must be greater than zero');
   }
+  
   if (num > 1000000) {
-    throw new Error('Quantity must be less than 1,000,000');
+    throw new Error('Quantity cannot exceed 1,000,000');
   }
+  
   return num;
-};
+}
 
-const getInventoryWithFilters = (filters = {}) => {
-  const {
-    nameContains,
-    minQuantity,
-    maxQuantity,
-    sortBy,
-    sortOrder,
-    page = 1,
-    limit = 10
-  } = filters;
-
-  const inventory = loadInventory();
-  let items = Object.entries(inventory).map(([item, quantity]) => ({
-    item,
-    quantity
-  }));
-
-  // Apply name filter
-  if (nameContains) {
-    items = items.filter(entry => 
-      entry.item.includes(nameContains.toLowerCase())
-    );
-  }
-
-  // Apply quantity filters
-  if (minQuantity !== undefined) {
-    items = items.filter(entry => entry.quantity >= minQuantity);
-  }
-  if (maxQuantity !== undefined) {
-    items = items.filter(entry => entry.quantity <= maxQuantity);
-  }
-
-  // Apply sorting
-  if (sortBy) {
-    items.sort((a, b) => {
-      if (sortBy === 'name') {
-        return sortOrder === 'desc' 
-          ? b.item.localeCompare(a.item)
-          : a.item.localeCompare(b.item);
-      }
-      if (sortBy === 'quantity') {
-        return sortOrder === 'desc'
-          ? b.quantity - a.quantity
-          : a.quantity - b.quantity;
-      }
-      return 0;
-    });
-  }
-
-  // Calculate pagination
-  const totalItems = items.length;
-  const totalPages = Math.ceil(totalItems / limit);
-  const startIndex = (page - 1) * limit;
-  const endIndex = startIndex + limit;
-
-  // Return paginated results with metadata
-  return {
-    items: items.slice(startIndex, endIndex),
-    pagination: {
-      page,
-      limit,
-      totalItems,
-      totalPages,
-      hasNextPage: page < totalPages,
-      hasPrevPage: page > 1
+/**
+ * Add an item to the user's inventory
+ * @param {string} userId - The ID of the user
+ * @param {Object} item - The item to add
+ * @param {string} item.name - Name of the item
+ * @param {number} item.quantity - Quantity of the item
+ * @param {string} item.unit - Unit of measurement
+ * @param {string} item.category - Category of the item
+ * @param {string} item.state - State of the item (fresh, packaged, etc.)
+ * @returns {Promise<Object>} The added item
+ */
+export async function addInventoryItem(userId, item) {
+  try {
+    // Validate required fields
+    if (!item.name || !item.quantity || !item.unit || !item.category || !item.state) {
+      throw new Error('Missing required fields');
     }
-  };
-};
 
-const addItem = (item, quantity) => {
-  const validatedItem = validateItem(item);
-  const validatedQuantity = validateQuantity(quantity);
+    // Validate and normalize item name and quantity
+    const normalizedName = validateItem(item.name);
+    const normalizedQuantity = validateQuantity(item.quantity);
 
-  const inventory = loadInventory();
-  inventory[validatedItem] = (inventory[validatedItem] || 0) + validatedQuantity;
-  saveInventory(inventory);
-  return inventory;
-};
+    // Ensure data directory exists
+    await fs.mkdir(path.dirname(INVENTORY_FILE), { recursive: true });
 
-const removeItem = (item, quantity) => {
-  const validatedItem = validateItem(item);
-  const validatedQuantity = validateQuantity(quantity);
+    // Load current inventory
+    let inventory = [];
+    try {
+      const data = await fs.readFile(INVENTORY_FILE, 'utf8');
+      inventory = JSON.parse(data);
+    } catch (error) {
+      // If file doesn't exist or is invalid, start with empty inventory
+      inventory = [];
+    }
 
-  const inventory = loadInventory();
-  if (!inventory[validatedItem]) {
-    throw new Error('Item not found in inventory');
+    // Generate a unique ID for the item
+    const newItem = {
+      id: Date.now().toString(),
+      ...item,
+      name: normalizedName,
+      quantity: normalizedQuantity,
+      userId,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+
+    // Find if item already exists for this user
+    const existingItemIndex = inventory.findIndex(
+      i => i.userId === userId && 
+           i.name === normalizedName &&
+           i.unit === item.unit
+    );
+
+    if (existingItemIndex >= 0) {
+      // Update existing item
+      inventory[existingItemIndex] = {
+        ...inventory[existingItemIndex],
+        quantity: inventory[existingItemIndex].quantity + normalizedQuantity,
+        updatedAt: new Date().toISOString()
+      };
+      newItem.id = inventory[existingItemIndex].id;
+    } else {
+      // Add new item
+      inventory.push(newItem);
+    }
+
+    // Save updated inventory
+    await fs.writeFile(INVENTORY_FILE, JSON.stringify(inventory, null, 2));
+
+    return existingItemIndex >= 0 ? inventory[existingItemIndex] : newItem;
+  } catch (error) {
+    console.error('Error adding inventory item:', error);
+    throw new Error('Failed to add item to inventory');
   }
-  if (inventory[validatedItem] < validatedQuantity) {
-    throw new Error(`Insufficient quantity. Only ${inventory[validatedItem]} available`);
+}
+
+/**
+ * Get all inventory items for a user
+ * @param {string} userId - The ID of the user
+ * @returns {Promise<Array>} Array of inventory items
+ */
+export async function getInventory(userId) {
+  try {
+    const data = await fs.readFile(INVENTORY_FILE, 'utf8');
+    const inventory = JSON.parse(data);
+    return inventory.filter(item => item.userId === userId);
+  } catch (error) {
+    // If file doesn't exist or is invalid, return empty array
+    return [];
   }
+}
 
-  inventory[validatedItem] -= validatedQuantity;
-  if (inventory[validatedItem] === 0) {
-    delete inventory[validatedItem];
+/**
+ * Update an inventory item
+ * @param {string} userId - The ID of the user
+ * @param {string} itemId - The ID of the item to update
+ * @param {Object} updates - The updates to apply
+ * @returns {Promise<Object>} The updated item
+ */
+export async function updateInventoryItem(userId, itemId, updates) {
+  try {
+    const data = await fs.readFile(INVENTORY_FILE, 'utf8');
+    let inventory = JSON.parse(data);
+    
+    const itemIndex = inventory.findIndex(
+      item => item.userId === userId && item.id === itemId
+    );
+    
+    if (itemIndex === -1) {
+      throw new Error('Item not found');
+    }
+    
+    inventory[itemIndex] = {
+      ...inventory[itemIndex],
+      ...updates,
+      updatedAt: new Date().toISOString()
+    };
+    
+    await fs.writeFile(INVENTORY_FILE, JSON.stringify(inventory, null, 2));
+    return inventory[itemIndex];
+  } catch (error) {
+    console.error('Error updating inventory item:', error);
+    throw new Error('Failed to update inventory item');
   }
-  saveInventory(inventory);
-  return inventory;
-};
+}
 
-const checkItemQuantity = (item) => {
-  const inventory = loadInventory();
-  return inventory[item] || 0;
-};
-
-export {
-  addItem,
-  removeItem,
-  checkItemQuantity,
-  getInventoryWithFilters,
-  validateItem,
-  validateQuantity,
-  loadInventory,
-  saveInventory,
-  inventoryFilePath
-}; 
+/**
+ * Delete an inventory item
+ * @param {string} userId - The ID of the user
+ * @param {string} itemId - The ID of the item to delete
+ * @returns {Promise<void>}
+ */
+export async function deleteInventoryItem(userId, itemId) {
+  try {
+    const data = await fs.readFile(INVENTORY_FILE, 'utf8');
+    let inventory = JSON.parse(data);
+    
+    inventory = inventory.filter(
+      item => !(item.userId === userId && item.id === itemId)
+    );
+    
+    await fs.writeFile(INVENTORY_FILE, JSON.stringify(inventory, null, 2));
+  } catch (error) {
+    console.error('Error deleting inventory item:', error);
+    throw new Error('Failed to delete inventory item');
+  }
+} 

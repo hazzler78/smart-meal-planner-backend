@@ -1,115 +1,211 @@
 import fs from 'fs';
 import path from 'path';
-import { 
-  addItem, 
-  removeItem, 
-  getInventoryWithFilters,
-  loadInventory,
-  saveInventory,
-  inventoryFilePath
+import {
+  addInventoryItem,
+  getInventory,
+  updateInventoryItem,
+  deleteInventoryItem
 } from '../services/inventoryService.js';
 
+const TEST_USER_ID = 'test-user-123';
+const TEST_DATA_DIR = path.join(process.cwd(), 'data');
+const TEST_INVENTORY_FILE = path.join(TEST_DATA_DIR, 'test-inventory.json');
+
 describe('Inventory Persistence Tests', () => {
-  // Save the original NODE_ENV
-  const originalEnv = process.env.NODE_ENV;
+  beforeAll(() => {
+    // Set test environment
+    process.env.NODE_ENV = 'test';
+    
+    // Ensure the data directory exists
+    if (!fs.existsSync(TEST_DATA_DIR)) {
+      fs.mkdirSync(TEST_DATA_DIR, { recursive: true });
+    }
+  });
 
   beforeEach(() => {
-    // Ensure we're not in test mode so data is actually saved
-    process.env.NODE_ENV = 'development';
-    
-    // Clear the inventory file before each test
-    if (fs.existsSync(inventoryFilePath)) {
-      fs.writeFileSync(inventoryFilePath, JSON.stringify({}));
+    // Clear the test inventory file before each test
+    if (fs.existsSync(TEST_INVENTORY_FILE)) {
+      fs.unlinkSync(TEST_INVENTORY_FILE);
     }
+    // Create an empty inventory file
+    fs.writeFileSync(TEST_INVENTORY_FILE, '[]');
   });
 
   afterEach(() => {
-    // Restore original NODE_ENV
-    process.env.NODE_ENV = originalEnv;
-  });
-
-  afterAll(() => {
-    // Clean up the inventory file after all tests
-    if (fs.existsSync(inventoryFilePath)) {
-      fs.unlinkSync(inventoryFilePath);
+    // Clean up after each test
+    if (fs.existsSync(TEST_INVENTORY_FILE)) {
+      fs.unlinkSync(TEST_INVENTORY_FILE);
     }
   });
 
-  test('should persist added items to inventory.json', () => {
+  afterAll(() => {
+    // Clean up the test data directory
+    if (fs.existsSync(TEST_INVENTORY_FILE)) {
+      fs.unlinkSync(TEST_INVENTORY_FILE);
+    }
+    // Note: We don't delete the data directory as it might be used by other tests
+  });
+
+  test('should persist added items to inventory.json', async () => {
     // Add items
-    addItem('rice', 2);
-    addItem('beans', 3);
+    await addInventoryItem(TEST_USER_ID, {
+      name: 'rice',
+      quantity: 2,
+      unit: 'kg',
+      category: 'pantry',
+      state: 'packaged'
+    });
+
+    await addInventoryItem(TEST_USER_ID, {
+      name: 'beans',
+      quantity: 3,
+      unit: 'kg',
+      category: 'pantry',
+      state: 'packaged'
+    });
 
     // Read the file directly
-    const fileContent = JSON.parse(fs.readFileSync(inventoryFilePath, 'utf-8'));
-    
-    // Verify file content
-    expect(fileContent).toHaveProperty('rice', 2);
-    expect(fileContent).toHaveProperty('beans', 3);
+    const fileContent = fs.readFileSync(TEST_INVENTORY_FILE, 'utf8');
+    const savedInventory = JSON.parse(fileContent);
+
+    // Verify items were saved
+    expect(savedInventory).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          userId: TEST_USER_ID,
+          name: 'rice',
+          quantity: 2
+        }),
+        expect.objectContaining({
+          userId: TEST_USER_ID,
+          name: 'beans',
+          quantity: 3
+        })
+      ])
+    );
   });
 
-  test('should persist removed items to inventory.json', () => {
-    // Setup initial inventory
-    addItem('rice', 5);
-    addItem('beans', 3);
+  test('should update existing items in inventory.json', async () => {
+    // Add initial item
+    const item = await addInventoryItem(TEST_USER_ID, {
+      name: 'rice',
+      quantity: 2,
+      unit: 'kg',
+      category: 'pantry',
+      state: 'packaged'
+    });
 
-    // Remove some items
-    removeItem('rice', 2);
+    // Update the item
+    await updateInventoryItem(TEST_USER_ID, item.id, {
+      quantity: 5
+    });
 
     // Read the file directly
-    const fileContent = JSON.parse(fs.readFileSync(inventoryFilePath, 'utf-8'));
-    
-    // Verify file content
-    expect(fileContent).toHaveProperty('rice', 3);
-    expect(fileContent).toHaveProperty('beans', 3);
+    const fileContent = fs.readFileSync(TEST_INVENTORY_FILE, 'utf8');
+    const savedInventory = JSON.parse(fileContent);
+
+    // Verify item was updated
+    expect(savedInventory).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          userId: TEST_USER_ID,
+          name: 'rice',
+          quantity: 5
+        })
+      ])
+    );
   });
 
-  test('should remove items completely when quantity reaches 0', () => {
-    // Setup initial inventory
-    addItem('rice', 2);
-    addItem('beans', 3);
+  test('should delete items from inventory.json', async () => {
+    // Add initial item
+    const item = await addInventoryItem(TEST_USER_ID, {
+      name: 'rice',
+      quantity: 2,
+      unit: 'kg',
+      category: 'pantry',
+      state: 'packaged'
+    });
 
-    // Remove all rice
-    removeItem('rice', 2);
+    // Delete the item
+    await deleteInventoryItem(TEST_USER_ID, item.id);
 
     // Read the file directly
-    const fileContent = JSON.parse(fs.readFileSync(inventoryFilePath, 'utf-8'));
-    
-    // Verify rice is removed and beans remain
-    expect(fileContent).not.toHaveProperty('rice');
-    expect(fileContent).toHaveProperty('beans', 3);
+    const fileContent = fs.readFileSync(TEST_INVENTORY_FILE, 'utf8');
+    const savedInventory = JSON.parse(fileContent);
+
+    // Verify item was deleted
+    expect(savedInventory).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          userId: TEST_USER_ID,
+          name: 'rice'
+        })
+      ])
+    );
   });
 
-  test('should load persisted data correctly', () => {
-    // Setup initial data
-    const initialData = {
-      'rice': 2,
-      'beans': 3
-    };
-    fs.writeFileSync(inventoryFilePath, JSON.stringify(initialData));
+  test('should load persisted data correctly', async () => {
+    // Add some test data
+    await addInventoryItem(TEST_USER_ID, {
+      name: 'rice',
+      quantity: 2,
+      unit: 'kg',
+      category: 'pantry',
+      state: 'packaged'
+    });
+
+    await addInventoryItem(TEST_USER_ID, {
+      name: 'beans',
+      quantity: 3,
+      unit: 'kg',
+      category: 'pantry',
+      state: 'packaged'
+    });
 
     // Load the inventory
-    const inventory = loadInventory();
+    const inventory = await getInventory(TEST_USER_ID);
 
-    // Verify loaded data matches what was written
-    expect(inventory).toEqual(initialData);
+    // Verify loaded data
+    expect(inventory).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          userId: TEST_USER_ID,
+          name: 'rice',
+          quantity: 2
+        }),
+        expect.objectContaining({
+          userId: TEST_USER_ID,
+          name: 'beans',
+          quantity: 3
+        })
+      ])
+    );
   });
 
   test('should handle concurrent operations correctly', async () => {
-    // Add initial inventory
-    addItem('rice', 5);
+    // Add initial item
+    const item = await addInventoryItem(TEST_USER_ID, {
+      name: 'rice',
+      quantity: 5,
+      unit: 'kg',
+      category: 'pantry',
+      state: 'packaged'
+    });
 
-    // Perform multiple concurrent remove operations
-    const operations = Array(3).fill().map(() => 
-      Promise.resolve(removeItem('rice', 1))
+    // Perform multiple concurrent update operations
+    const operations = Array(3).fill().map(() =>
+      updateInventoryItem(TEST_USER_ID, item.id, {
+        quantity: 2
+      })
     );
 
+    // Wait for all operations to complete
     await Promise.all(operations);
 
-    // Read the file directly
-    const fileContent = JSON.parse(fs.readFileSync(inventoryFilePath, 'utf-8'));
-    
-    // Verify final state is correct
-    expect(fileContent).toHaveProperty('rice', 2);
+    // Verify final state
+    const inventory = await getInventory(TEST_USER_ID);
+    const riceItem = inventory.find(i => i.name === 'rice');
+    expect(riceItem).toBeDefined();
+    expect(riceItem.quantity).toBe(2); // Last update should win
   });
 }); 
