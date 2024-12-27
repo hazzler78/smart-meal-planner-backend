@@ -2066,5 +2066,29 @@
     "id": "1735286760922",
     "createdAt": "2024-12-27T08:06:00.922Z",
     "updatedAt": "2024-12-27T08:06:00.922Z"
+  },
+  {
+    "name": "Test Meal Plan",
+    "mealsPerDay": 3,
+    "ingredients": [
+      "rice",
+      "vegetables"
+    ],
+    "startDate": "2024-12-27T12:39:56.041Z",
+    "endDate": "2025-01-03T12:39:56.041Z",
+    "preferences": {
+      "dietary": [],
+      "excluded": []
+    },
+    "userId": "676ea01b7ea8f955b288b46c",
+    "meals": [
+      "Stir-fried vegetables and rice: Saute your choice of vegetables in a wok with soy sauce, garlic, and ginger. Serve over cooked rice.",
+      "Vegetable fried rice: Cook rice and stir-fry mixed vegetables such as bell peppers, carrots, and peas. Add soy sauce and scrambled egg for protein.",
+      "Vegetable curry with rice: Make a flavorful curry with vegetables like potatoes, peas, and cauliflower. Serve over steamed rice."
+    ],
+    "generatedAt": "2024-12-27T12:39:57.571Z",
+    "id": "1735303197572",
+    "createdAt": "2024-12-27T12:39:57.572Z",
+    "updatedAt": "2024-12-27T12:39:57.572Z"
   }
 ]

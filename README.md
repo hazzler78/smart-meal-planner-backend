@@ -237,6 +237,12 @@ npm run dev
 - PUT `/api/shopping-list/:id` - Update shopping list item
 - POST `/api/shopping-list/generate` - Generate shopping list from meal plan
 
+### Image Analysis
+- POST `/api/image-analysis/analyze` - Analyze food image for ingredient detection
+- POST `/api/image-analysis/scan-receipt` - Scan and extract items from receipt
+- POST `/api/image-analysis/nutrition` - Get nutritional information from food image
+- GET `/api/image-analysis/history` - Get user's image analysis history
+
 ## Testing
 
 Run the test suite:
